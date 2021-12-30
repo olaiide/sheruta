@@ -8,7 +8,7 @@ const initialState = {
     states: []
 }
 
-export default (state = initialState, { type, payload }) => {
+const ViewReducer =  (state = initialState, { type, payload }) => {
     switch (type) {
 
     case 'SET_VIEW_STATE':
@@ -18,3 +18,4 @@ export default (state = initialState, { type, payload }) => {
         return state
     }
 }
+export default ViewReducer

@@ -5,13 +5,14 @@ const initialState = {
     loading: false
 }
 
-export default (state = initialState, { type, payload }) => {
-    switch (type) {
+const AgentReducer = (state = initialState, { type, payload }) => {
+	switch (type) {
+		case 'SET_AGENT_STATE':
+			return { ...state, ...payload }
 
-    case 'SET_AGENT_STATE':
-        return { ...state, ...payload }
-
-    default:
-        return state
-    }
+		default:
+			return state
+	}
 }
+
+export default AgentReducer;

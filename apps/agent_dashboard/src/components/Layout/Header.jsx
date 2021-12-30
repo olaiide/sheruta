@@ -40,7 +40,7 @@ export default function Header() {
 			body.classList.remove('sidebar-enable')
 			body.setAttribute('data-sidebar-size', 'lg')
 		}
-	}, [showNav])
+	}, [showNav, body])
 
 	useEffect(() => {
 		_setMode(mode)
