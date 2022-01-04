@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import Avatar1 from '../../ui_assets/images/users/avatar-1.jpg'
 import logo from '../../assets/img/logo.png'
 import { useEffect } from 'react'
-import Global from '../../Global'
+import Global from '../../Global';
+import { useSelector } from 'react-redux';
 
 export default function Header() {
 	const [showNav, setShowNav] = useState(false)
@@ -11,7 +11,8 @@ export default function Header() {
 	const [showProfileOptions, setShowProfileOptions] = useState(false)
 	const toggleSideNav = () => {
 		setShowNav(!showNav)
-	}
+	};
+	const {user} = useSelector(state => state.auth);
 	let body = document.querySelector('body')
 
 	const _setMode = (newMode) => {
@@ -422,11 +423,11 @@ export default function Header() {
 						>
 							<img
 								className="rounded-circle header-profile-user"
-								src={Avatar1}
+								src={user?.avatar_url}
 								alt="Header Avatar"
 							/>
 							<span className="d-none d-xl-inline-block ms-1 fw-medium">
-								Paul K.
+								{user.first_name}
 							</span>
 							<i className="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
 						</button>

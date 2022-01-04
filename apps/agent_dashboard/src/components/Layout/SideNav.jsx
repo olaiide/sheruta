@@ -1,12 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FiHome, FiSettings, FiPower, FiMail } from 'react-icons/fi'
-import { SiHandshake } from 'react-icons/si'
-import { BiUser} from 'react-icons/bi'
+import {
+	FiHome,
+	FiSettings,
+	FiPower,
+	FiMail,
+	FiUsers,
+	FiDatabase,
+	FiEdit3,
+} from 'react-icons/fi'
+import { BiUser, BiBuildings } from 'react-icons/bi'
+import { RiChat3Line } from 'react-icons/ri'
+import { IoAnalyticsSharp } from 'react-icons/io5';
+import { HiOutlineUserGroup } from 'react-icons/hi'
 
 const EachNav = ({ Icon, title, route, count, active }) => {
 	return (
-		<li className={active &&"mm-active"}>
+		<li className={active && 'mm-active'}>
 			<Link to={route} className={active ? 'active' : ''}>
 				{Icon}
 				{count && (
@@ -51,8 +61,46 @@ export default function SideNav({ pageName }) {
 												title="Home"
 												route="/"
 												Icon={<FiHome />}
-												count={44}
-												active
+												active={pageName === 'home'}
+											/>
+											<EachNav
+												title="Logs"
+												route="/logs"
+												Icon={<FiDatabase />}
+												active={pageName === 'logs'}
+											/>
+											<EachNav
+												title="Blog"
+												route="/blog"
+												Icon={<FiEdit3 />}
+												active={pageName === 'blog'}
+											/>
+											<EachNav
+												title="Analytics"
+												route="/analytics"
+												Icon={<IoAnalyticsSharp />}
+												active={pageName === 'users'}
+											/>
+											<EachNav
+												title="Users"
+												route="/users"
+												Icon={<FiUsers />}
+												active={pageName === 'users'}
+											/>
+											<EachNav
+												title="Email"
+												route="/email"
+												Icon={<FiMail />}
+												active={pageName === 'email'}
+											/>
+											<li className="menu-title" data-key="t-menu">
+												Pages
+											</li>
+											<EachNav
+												title="Properties"
+												route="/properties"
+												Icon={<BiBuildings />}
+												active={pageName === 'email'}
 											/>
 
 											<li className="menu-title mt-2" data-key="t-components">
@@ -62,13 +110,12 @@ export default function SideNav({ pageName }) {
 											<EachNav
 												title="Join Paddy"
 												route="/"
-												Icon={<SiHandshake />}
-												count={44}
+												Icon={<HiOutlineUserGroup />}
 											/>
 											<EachNav
-												title="Messages"
+												title="Chat"
 												route="/"
-												Icon={<FiMail />}
+												Icon={<RiChat3Line />}
 												count={44}
 											/>
 											<li className="menu-title mt-2" data-key="t-components">
@@ -79,20 +126,13 @@ export default function SideNav({ pageName }) {
 												title="Profile"
 												route="/profile"
 												Icon={<BiUser />}
-												count={44}
 											/>
 											<EachNav
 												title="Settings"
 												route="/"
 												Icon={<FiSettings />}
-												count={44}
 											/>
-											<EachNav
-												title="Logout"
-												route="/"
-												Icon={<FiPower />}
-												count={44}
-											/>
+											<EachNav title="Logout" route="/" Icon={<FiPower />} />
 										</ul>
 
 										<div className="card sidebar-alert shadow-none text-center mx-4 mb-0 mt-5">
