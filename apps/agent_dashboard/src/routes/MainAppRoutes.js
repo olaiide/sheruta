@@ -13,6 +13,7 @@ import Blog from '../pages/Blog/Blog'
 import Analyticss from '../pages/Analytics/Analytics';
 import Users from '../pages/Users/Users';
 import Email from '../pages/Email/Email'
+import Profile from '../pages/Profile/Profile'
 
 export default function MainAppRoutes() {
 	const { user } = useSelector((state) => state.auth)
@@ -33,6 +34,7 @@ export default function MainAppRoutes() {
 						<Route path="/analytics" element={<Analyticss />} />
 						<Route path="/users" element={<Users />} />
 						<Route path="/email" element={<Email />} />
+						<Route path="/profile" element={<Profile />} />
 					</Routes>
 				)}
 			</BrowserRouter>
