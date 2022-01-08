@@ -8,6 +8,11 @@ import '../ui_assets/css/app.min.css'
 import '../ui_assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css'
 import { useSelector } from 'react-redux'
 import Home from '../pages/Home/Home'
+import Logs from '../pages/Logs/Logs'
+import Blog from '../pages/Blog/Blog'
+import Analyticss from '../pages/Analytics/Analytics';
+import Users from '../pages/Users/Users';
+import Email from '../pages/Email/Email'
 
 export default function MainAppRoutes() {
 	const { user } = useSelector((state) => state.auth)
@@ -23,6 +28,11 @@ export default function MainAppRoutes() {
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/login" element={<Login />} />
+						<Route path="/logs" element={<Logs />} />
+						<Route path="/blog" element={<Blog />} />
+						<Route path="/analytics" element={<Analyticss />} />
+						<Route path="/users" element={<Users />} />
+						<Route path="/email" element={<Email />} />
 					</Routes>
 				)}
 			</BrowserRouter>

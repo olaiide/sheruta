@@ -9,7 +9,7 @@ import {
 	FiDatabase,
 	FiEdit3,
 } from 'react-icons/fi'
-import { BiUser, BiBuildings } from 'react-icons/bi'
+import { BiUser, BiBuildings, BiBell } from 'react-icons/bi'
 import { RiChat3Line } from 'react-icons/ri'
 import { IoAnalyticsSharp } from 'react-icons/io5';
 import { HiOutlineUserGroup } from 'react-icons/hi'
@@ -79,7 +79,7 @@ export default function SideNav({ pageName }) {
 												title="Analytics"
 												route="/analytics"
 												Icon={<IoAnalyticsSharp />}
-												active={pageName === 'users'}
+												active={pageName === 'analytics'}
 											/>
 											<EachNav
 												title="Users"
@@ -100,7 +100,14 @@ export default function SideNav({ pageName }) {
 												title="Properties"
 												route="/properties"
 												Icon={<BiBuildings />}
-												active={pageName === 'email'}
+												active={pageName === 'properties'}
+											/>
+											<EachNav
+												title="Notifications"
+												route="/notifications"
+												Icon={<BiBell />}
+												active={pageName === 'notifications'}
+												count={4}
 											/>
 
 											<li className="menu-title mt-2" data-key="t-components">
