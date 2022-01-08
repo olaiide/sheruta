@@ -14,11 +14,13 @@ import Analyticss from '../pages/Analytics/Analytics';
 import Users from '../pages/Users/Users';
 // import Email from '../pages/Email/Email'
 import Profile from '../pages/Profile/Profile'
+import MasterPopup from '../components/MasterPopup/MasterPopup'
 
 export default function MainAppRoutes() {
 	const { user } = useSelector((state) => state.auth)
 	return (
 		<div>
+			<MasterPopup />
 			<BrowserRouter>
 				{!user ? (
 					<Routes>

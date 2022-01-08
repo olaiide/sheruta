@@ -1,74 +1,76 @@
 import moment from 'moment'
-import React, { useState } from 'react'
+import React from 'react'
 // import { Modal } from 'react-bootstrap';
 // import EmailSender from '../../components/EmailSender/EmailSender';
 
 export default function EachUserCard({ user }) {
-	const [showEmail, setShowEmail] = useState(false)
+	// const [showEmail, setShowEmail] = useState(false)
 	return (
-		<div class="card">
-			<div class="card-body">
-				<div class="dropdown float-end">
+		<div className="card">
+			<div className="card-body">
+				<div className="dropdown float-end">
 					<a
-						class="text-muted dropdown-toggle font-size-16"
-						href="#"
+						className="text-muted dropdown-toggle font-size-16"
+						href="#c"
 						role="button"
 						data-bs-toggle="dropdown"
 						aria-haspopup="true"
 					>
-						<i class="bx bx-dots-horizontal-rounded"></i>
+						<i className="bx bx-dots-horizontal-rounded"></i>
 					</a>
-					<div class="dropdown-menu dropdown-menu-end">
-						<a class="dropdown-item" href="#">
+					<div className="dropdown-menu dropdown-menu-end">
+						<a className="dropdown-item" href="#c">
 							Edit
 						</a>
-						<a class="dropdown-item" href="#">
+						<a className="dropdown-item" href="#c">
 							Action
 						</a>
-						<a class="dropdown-item" href="#">
+						<a className="dropdown-item" href="#c">
 							Remove
 						</a>
 					</div>
 				</div>
-				<div class="d-flex align-items-center">
+				<div className="d-flex align-items-center">
 					<div>
 						<img
 							src={user?.avatar_url}
 							alt=""
-							class="avatar-lg rounded-circle img-thumbnail"
+							className="avatar-lg rounded-circle img-thumbnail"
 						/>
 					</div>
-					<div class="flex-1 ms-3">
-						<h5 class="font-size-15 mb-1">
-							<a href="#" class="text-dark">
+					<div className="flex-1 ms-3">
+						<h5 className="font-size-15 mb-1">
+							<a href="#c" className="text-dark">
 								{user?.first_name} {user?.last_name}
 							</a>
 						</h5>
-						<p class="text-muted mb-0">@{user?.username}</p>
+						<p className="text-muted mb-0">@{user?.username}</p>
 					</div>
 				</div>
-				<div class="mt-3 pt-1">
-					<p class="text-muted mb-0">
-						<i class="mdi mdi-phone font-size-15 align-middle pe-2 text-primary"></i>
-						{user?.phone_number}
+				<div className="mt-3 pt-1">
+					<p className="text-muted mb-0">
+						<i className="mdi font-size-15 align-middle pe-2 text-primary">
+							Joined
+						</i>
+						{moment(user?.created_at).fromNow()}
 					</p>
-					<p class="text-muted mb-0 mt-2">
-						<i class="mdi mdi-email font-size-15 align-middle pe-2 text-primary"></i>
+					<p className="text-muted mb-0 mt-2">
+						<i className="mdi mdi-email font-size-15 align-middle pe-2 text-primary"></i>
 						{user?.email}
 					</p>
-					<p class="text-muted mb-0 mt-2">
-						<i class="mdi mdi-book font-size-15 align-middle pe-2 text-primary"></i>
-						{user?.budget}
+					<p className="text-muted mb-0 mt-2">
+						<i className="mdi mdi-send font-size-15 align-middle pe-2 text-primary"></i>
+						N {window.formatedPrice.format(user?.budget)}
 					</p>
 				</div>
 			</div>
 
-			<div class="btn-group" role="group">
-				<button type="button" class="btn btn-outline-light text-truncate">
-					<i class="uil uil-user me-1"></i> Message
+			<div className="btn-group" role="group">
+				<button type="button" className="btn btn-outline-light text-truncate">
+					<i className="uil uil-user me-1"></i> Message
 				</button>
-				<button type="button" class="btn btn-outline-light text-truncate">
-					<i class="uil uil-envelope-alt me-1"></i> Call
+				<button type="button" className="btn btn-outline-light text-truncate">
+					<i className="uil uil-envelope-alt me-1"></i> Call
 				</button>
 			</div>
 		</div>

@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import logo from '../../assets/img/logo.png'
 import { useEffect } from 'react'
 import Global from '../../Global';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutAgent } from '../../redux/actions/auth.action';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
 	const [showNav, setShowNav] = useState(false)
@@ -12,6 +14,7 @@ export default function Header() {
 	const toggleSideNav = () => {
 		setShowNav(!showNav)
 	};
+	const dispatch = useDispatch()
 	const {user} = useSelector(state => state.auth);
 	let body = document.querySelector('body')
 
@@ -437,19 +440,23 @@ export default function Header() {
 							}`}
 							style={{ left: '-5rem' }}
 						>
-							<a className="dropdown-item" href="apps-contacts-profile.html">
+							<Link className="dropdown-item" to="/profile">
 								<i className="mdi mdi-face-profile font-size-16 align-middle me-1"></i>{' '}
 								Profile
-							</a>
+							</Link>
 							<a className="dropdown-item" href="auth-lock-screen.html">
 								<i className="mdi mdi-lock font-size-16 align-middle me-1"></i>{' '}
 								Lock screen
 							</a>
 							<div className="dropdown-divider"></div>
-							<a className="dropdown-item" href="auth-logout.html">
+							<Link
+								className="dropdown-item"
+								to="/"
+								onClick={() => dispatch(logoutAgent())}
+							>
 								<i className="mdi mdi-logout font-size-16 align-middle me-1"></i>{' '}
 								Logout
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>

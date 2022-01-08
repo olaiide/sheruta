@@ -11,12 +11,17 @@ import {
 } from 'react-icons/fi'
 import { BiUser, BiBuildings, BiBell } from 'react-icons/bi'
 import { RiChat3Line } from 'react-icons/ri'
-import { IoAnalyticsSharp } from 'react-icons/io5';
+import { IoAnalyticsSharp } from 'react-icons/io5'
 import { HiOutlineUserGroup } from 'react-icons/hi'
+import { useDispatch } from 'react-redux'
+import { logoutAgent } from '../../redux/actions/auth.action'
 
-const EachNav = ({ Icon, title, route, count, active }) => {
+const EachNav = ({ Icon, title, route, count, active, onClick }) => {
 	return (
-		<li className={active && 'mm-active'}>
+		<li
+			className={active && 'mm-active'}
+			onClick={onClick ? () => onClick() : () => {}}
+		>
 			<Link to={route} className={active ? 'active' : ''}>
 				{Icon}
 				{count && (
@@ -31,6 +36,8 @@ const EachNav = ({ Icon, title, route, count, active }) => {
 }
 
 export default function SideNav({ pageName }) {
+	const dispatch = useDispatch()
+
 	return (
 		<div className="vertical-menu mm-active">
 			<div data-simplebar="init" className="h-100 mm-show">
@@ -133,13 +140,19 @@ export default function SideNav({ pageName }) {
 												title="Profile"
 												route="/profile"
 												Icon={<BiUser />}
+												active={pageName === 'profile'}
 											/>
 											<EachNav
 												title="Settings"
 												route="/"
 												Icon={<FiSettings />}
 											/>
-											<EachNav title="Logout" route="/" Icon={<FiPower />} />
+											<EachNav
+												title="Logout"
+												route="/"
+												Icon={<FiPower />}
+												onClick={() => dispatch(logoutAgent())}
+											/>
 										</ul>
 
 										<div className="card sidebar-alert shadow-none text-center mx-4 mb-0 mt-5">

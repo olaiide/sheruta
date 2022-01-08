@@ -5,7 +5,8 @@ const initialState = {
     categories: [],
     amenities: [],
     status: [],
-    states: []
+    states: [],
+    subscriptions: []
 }
 
 const ViewReducer =  (state = initialState, { type, payload }) => {
