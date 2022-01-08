@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Layout from '../../components/Layout/Layout'
-import Editor from '../../components/Editor/Editor'
 import axios from 'axios'
 import { useToasts } from 'react-toast-notifications';
 import EmailSender from '../../components/EmailSender/EmailSender'
+import Cookies from 'js-cookie'
 
 const Email = (props) => {
     const { addToast } = useToasts();
@@ -31,7 +31,7 @@ const Email = (props) => {
             data,
             headers: {
                 Authorization:
-                    `Bearer ${JSON.parse(localStorage.getItem('state')).auth.jwt}`,
+                    `Bearer ${Cookies.get('token')}`,
             },
         })
             .then(res => {

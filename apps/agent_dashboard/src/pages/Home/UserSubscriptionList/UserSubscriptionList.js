@@ -34,14 +34,18 @@ export default function UserSubscriptionList() {
 										className="simplebar-content"
 										style={{ padding: '0px 16px' }}
 									>
-										{subscriptions
-											.filter((x) => x.status === 'success')
-											.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-											.map((val, i) => {
-												return (
-													<EachSubscribtionUser sub={val} key={`sub-${i}`} />
+										{subscriptions &&
+											subscriptions
+												.filter((x) => x.status === 'success')
+												.sort(
+													(a, b) =>
+														new Date(b.created_at) - new Date(a.created_at)
 												)
-											})}
+												.map((val, i) => {
+													return (
+														<EachSubscribtionUser sub={val} key={`sub-${i}`} />
+													)
+												})}
 									</div>
 								</div>
 							</div>

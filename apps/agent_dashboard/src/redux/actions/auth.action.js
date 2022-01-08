@@ -73,7 +73,9 @@ export const loginAgent = (data) => (dispatch) => {
 
 export const logoutAgent = () => (dispatch) => {
 	console.log('bye')
+	localStorage.removeItem('state')
 	localStorage.removeItem('token')
+	Cookies.remove('token')
 	dispatch({
 		type: 'SET_AUTH_STATE',
 		payload: {

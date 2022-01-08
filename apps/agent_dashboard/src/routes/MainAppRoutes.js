@@ -12,7 +12,7 @@ import Logs from '../pages/Logs/Logs'
 import Blog from '../pages/Blog/Blog'
 import Analyticss from '../pages/Analytics/Analytics';
 import Users from '../pages/Users/Users';
-// import Email from '../pages/Email/Email'
+import Email from '../pages/Email/Email'
 import Profile from '../pages/Profile/Profile'
 import MasterPopup from '../components/MasterPopup/MasterPopup'
 
@@ -35,7 +35,7 @@ export default function MainAppRoutes() {
 						<Route path="/blog" element={<Blog />} />
 						<Route path="/analytics" element={<Analyticss />} />
 						<Route path="/users" element={<Users />} />
-						{/* <Route path="/email" element={<Email />} /> */}
+						<Route path="/email" element={<Email />} />
 						<Route path="/profile" element={<Profile />} />
 					</Routes>
 				)}

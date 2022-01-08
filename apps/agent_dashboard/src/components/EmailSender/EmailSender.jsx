@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Editor from '../Editor/Editor'
 import axios from 'axios'
 import { useToasts } from 'react-toast-notifications'
+import Cookies from 'js-cookie'
 
 const Email = (props) => {
 	const { addToast } = useToasts()
@@ -23,13 +24,14 @@ const Email = (props) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
+		console.log('SENDING ---', data)
 		setState({ ...state, loading: true })
 		axios(process.env.REACT_APP_API_URL + '/sheruta/send/email', {
 			method: 'POST',
 			data,
 			headers: {
 				Authorization: `Bearer ${
-					JSON.parse(localStorage.getItem('state')).auth.jwt
+					Cookies.get('token')
 				}`,
 			},
 		})
@@ -60,7 +62,7 @@ const Email = (props) => {
 			<div className="text-center">
 				<h5>Email Every User</h5>
 			</div>
-			<form onSubmit={handleSubmit}>
+			<div>
 				<div className="form-group mb-3">
 					<label>Email Heading</label>
 					<input
@@ -102,11 +104,12 @@ const Email = (props) => {
 				<button
 					type="submit"
 					disabled={state.loading}
+					onClick={handleSubmit}
 					className="btn mrg-0 btn-danger btn-block mt-3"
 				>
 					{state.loading ? 'Loading' : 'Send'}
 				</button>
-			</form>
+			</div>
 		</div>
 	)
 }
