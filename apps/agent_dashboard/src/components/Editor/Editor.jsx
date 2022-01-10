@@ -5,7 +5,29 @@ import ReactQuill from 'react-quill' // ES6
 import 'react-quill/dist/quill.snow.css' // E
 
 export default function Editor({ onChange, data }) {
-	return <ReactQuill value={data} onChange={onChange} />
+	return (
+		<ReactQuill
+			value={data}
+			onChange={onChange}
+			modules={{
+				toolbar: {
+					container: [
+						[{ header: [3, 4, false] }],
+						['bold', 'italic', 'underline'],
+						[{ list: 'ordered' }, { list: 'bullet' }],
+						// [{ align: [] }],
+						['link'],
+						// ['link', 'image'],
+						// ['clean'],
+						// [{ color: ['black', 'blue'] }],
+					],
+					// handlers: {
+					// 	image: () => {},
+					// },
+				},
+			}}
+		/>
+	)
 	// return (
 	//     <CKEditor
 	//         editor={ClassicEditor}

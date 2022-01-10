@@ -13,7 +13,7 @@ import { BiUser, BiBuildings, BiBell } from 'react-icons/bi'
 import { RiChat3Line } from 'react-icons/ri'
 import { IoAnalyticsSharp } from 'react-icons/io5'
 import { HiOutlineUserGroup } from 'react-icons/hi'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logoutAgent } from '../../redux/actions/auth.action'
 
 const EachNav = ({ Icon, title, route, count, active, onClick }) => {
@@ -36,7 +36,8 @@ const EachNav = ({ Icon, title, route, count, active, onClick }) => {
 }
 
 export default function SideNav({ pageName }) {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
+	const { user } = useSelector(state => state.auth);
 
 	return (
 		<div className="vertical-menu mm-active">
@@ -138,7 +139,7 @@ export default function SideNav({ pageName }) {
 
 											<EachNav
 												title="Profile"
-												route="/profile"
+												route={`/user/${user?.id}`}
 												Icon={<BiUser />}
 												active={pageName === 'profile'}
 											/>

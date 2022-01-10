@@ -10,6 +10,7 @@ const Email = (props) => {
 	const [state, setState] = useState({
 		loading: false,
 	})
+	const [emailType, setEmailType] = useState('email')
 
 	const [data, setData] = useState({
 		body: null,
@@ -28,11 +29,9 @@ const Email = (props) => {
 		setState({ ...state, loading: true })
 		axios(process.env.REACT_APP_API_URL + '/sheruta/send/email', {
 			method: 'POST',
-			data,
+			data: { ...data, email_type: emailType },
 			headers: {
-				Authorization: `Bearer ${
-					Cookies.get('token')
-				}`,
+				Authorization: `Bearer ${Cookies.get('token')}`,
 			},
 		})
 			.then((res) => {
@@ -59,10 +58,25 @@ const Email = (props) => {
 
 	return (
 		<div className="container">
-			<div className="text-center">
-				<h5>Email Every User</h5>
+			<div className="text-center mb-3">
+				<h1>Email Every User</h1>
 			</div>
-			<div>
+			<div className="card p-3 rounded">
+				<div className="text-center">
+					{['email'].map((val, i) => {
+						return (
+							<button
+								key={`options-${i}`}
+								onClick={() => setEmailType(val)}
+								className={`m-1 btn ${
+									emailType === val ? 'btn-success' : 'border border-success'
+								} `}
+							>
+								{val.toUpperCase()}
+							</button>
+						)
+					})}
+				</div>
 				<div className="form-group mb-3">
 					<label>Email Heading</label>
 					<input
@@ -103,7 +117,7 @@ const Email = (props) => {
 				/>
 				<button
 					type="submit"
-					disabled={state.loading}
+					disabled={state.loading || (!data.heading && !data.body)}
 					onClick={handleSubmit}
 					className="btn mrg-0 btn-danger btn-block mt-3"
 				>

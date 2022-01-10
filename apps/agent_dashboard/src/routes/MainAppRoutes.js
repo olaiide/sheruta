@@ -36,7 +36,7 @@ export default function MainAppRoutes() {
 						<Route path="/analytics" element={<Analyticss />} />
 						<Route path="/users" element={<Users />} />
 						<Route path="/email" element={<Email />} />
-						<Route path="/profile" element={<Profile />} />
+						<Route path="/user/:user_id" element={<Profile />} />
 					</Routes>
 				)}
 			</BrowserRouter>

@@ -1,12 +1,26 @@
 import moment from 'moment'
-import React from 'react'
+import React, { useState } from 'react'
+import { Modal } from 'react-bootstrap'
+import AdminMessager from '../../components/AdminMessager/AdminMessager'
 // import { Modal } from 'react-bootstrap';
 // import EmailSender from '../../components/EmailSender/EmailSender';
 
 export default function EachUserCard({ user }) {
 	// const [showEmail, setShowEmail] = useState(false)
+	const [showMessaer, setShowMessager] = useState(false)
 	return (
 		<div className="card">
+			<Modal show={showMessaer} onExit={() => setShowMessager(false)}>
+				<Modal.Body>
+					<AdminMessager user={user} done={() => setShowMessager(false)} />
+					<button
+						className="btn text-danger mt-3"
+						onClick={() => setShowMessager(false)}
+					>
+						Cancel
+					</button>
+				</Modal.Body>
+			</Modal>
 			<div className="card-body">
 				<div className="dropdown float-end">
 					<a
@@ -31,11 +45,12 @@ export default function EachUserCard({ user }) {
 					</div>
 				</div>
 				<div className="d-flex align-items-center">
-					<div>
+					<div className="col-4">
 						<img
 							src={user?.avatar_url}
 							alt=""
-							className="avatar-lg rounded-circle img-thumbnail"
+							width="60"
+							className=" rounded-circle img-thumbnail"
 						/>
 					</div>
 					<div className="flex-1 ms-3">
@@ -48,6 +63,10 @@ export default function EachUserCard({ user }) {
 					</div>
 				</div>
 				<div className="mt-3 pt-1">
+					<p className="text-muted mb-0 mt-2">
+						<i className=" font-size-15 align-middle pe-2 text-primary">#</i>
+						{user?.id}
+					</p>
 					<p className="text-muted mb-0">
 						<i className="mdi font-size-15 align-middle pe-2 text-primary">
 							Joined
@@ -66,7 +85,11 @@ export default function EachUserCard({ user }) {
 			</div>
 
 			<div className="btn-group" role="group">
-				<button type="button" className="btn btn-outline-light text-truncate">
+				<button
+					type="button"
+					className="btn btn-outline-light text-truncate"
+					onClick={() => setShowMessager(true)}
+				>
 					<i className="uil uil-user me-1"></i> Message
 				</button>
 				<button type="button" className="btn btn-outline-light text-truncate">

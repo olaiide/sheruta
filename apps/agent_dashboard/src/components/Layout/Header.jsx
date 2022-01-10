@@ -440,7 +440,7 @@ export default function Header() {
 							}`}
 							style={{ left: '-5rem' }}
 						>
-							<Link className="dropdown-item" to="/profile">
+							<Link className="dropdown-item" to={`/user/${user?.id}`}>
 								<i className="mdi mdi-face-profile font-size-16 align-middle me-1"></i>{' '}
 								Profile
 							</Link>
