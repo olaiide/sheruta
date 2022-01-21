@@ -1,12 +1,13 @@
 const initialState = {
-    sideNav: false,
-    notification: false,
-    message: false,
-    categories: [],
-    amenities: [],
-    status: [],
-    states: [],
-    subscriptions: []
+	sideNav: false,
+	notification: false,
+	message: false,
+	categories: [],
+	amenities: [],
+	status: [],
+	states: [],
+	subscriptions: [],
+	paymentTypes: []
 }
 
 const ViewReducer =  (state = initialState, { type, payload }) => {

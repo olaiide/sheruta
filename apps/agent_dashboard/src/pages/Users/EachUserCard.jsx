@@ -45,14 +45,12 @@ export default function EachUserCard({ user }) {
 					</div>
 				</div>
 				<div className="d-flex align-items-center">
-					<div className="col-4">
 						<img
 							src={user?.avatar_url}
 							alt=""
 							width="60"
 							className=" rounded-circle img-thumbnail"
 						/>
-					</div>
 					<div className="flex-1 ms-3">
 						<h5 className="font-size-15 mb-1">
 							<a href="#c" className="text-dark">

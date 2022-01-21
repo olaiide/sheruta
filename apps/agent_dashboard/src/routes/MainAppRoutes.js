@@ -15,6 +15,8 @@ import Users from '../pages/Users/Users';
 import Email from '../pages/Email/Email'
 import Profile from '../pages/Profile/Profile'
 import MasterPopup from '../components/MasterPopup/MasterPopup'
+import Properties from '../pages/Properties/Properties'
+import CreateProperty from '../pages/Properties/CreateProperty'
 
 export default function MainAppRoutes() {
 	const { user } = useSelector((state) => state.auth)
@@ -24,12 +26,14 @@ export default function MainAppRoutes() {
 			<BrowserRouter>
 				{!user ? (
 					<Routes>
-						<Route path="/" element={<Login />} />
+						<Route path="*" element={<Login />} />
 						<Route path="/login" element={<Login />} />
 					</Routes>
 				) : (
 					<Routes>
 						<Route path="/" element={<Home />} />
+						<Route path="/properties" element={<Properties />} />
+						<Route path="/properties/create" element={<CreateProperty />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/logs" element={<Logs />} />
 						<Route path="/blog" element={<Blog />} />

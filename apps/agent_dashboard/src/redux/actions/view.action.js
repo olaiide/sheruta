@@ -16,6 +16,20 @@ export const getAllCategories = () => (dispatch) => {
 			console.log('error ---', err)
 		})
 }
+export const getAllAmenities = () => (dispatch) => {
+	axios(process.env.REACT_APP_API_URL + '/amenities')
+		.then((res) => {
+			dispatch({
+				type: 'SET_VIEW_STATE',
+				payload: {
+					amenities: res.data,
+				},
+			})
+		})
+		.catch((err) => {
+			console.log('error ---', err)
+		})
+}
 
 export const getAllStatus = () => (dispatch) => {
 	axios(process.env.REACT_APP_API_URL + '/status')
@@ -23,7 +37,9 @@ export const getAllStatus = () => (dispatch) => {
 			console.log(res)
 			dispatch({
 				type: 'SET_VIEW_STATE',
-				status: res.data,
+				payload: {
+					status: res.data,
+				},
 			})
 		})
 		.catch((err) => {
@@ -31,26 +47,29 @@ export const getAllStatus = () => (dispatch) => {
 		})
 }
 
-export const getAllAmenities = () => (dispatch) => {
-	axios(process.env.REACT_APP_API_URL + '/amenities')
-		.then((res) => {
-			console.log(res)
-			dispatch({
-				type: 'SET_VIEW_STATE',
-				amenities: res.data,
-			})
-		})
-		.catch((err) => {
-			console.log(err)
-		})
-}
 export const getAllStates = () => (dispatch) => {
 	axios(process.env.REACT_APP_API_URL + '/states')
 		.then((res) => {
 			console.log('States --', res)
 			dispatch({
 				type: 'SET_VIEW_STATE',
-				states: res.data,
+				payload: {
+					states: res.data,
+				},
+			})
+		})
+		.catch((err) => {
+			console.log(err)
+		})
+}
+export const paymentTypes = () => (dispatch) => {
+	axios(process.env.REACT_APP_API_URL + '/payment-types')
+		.then((res) => {
+			dispatch({
+				type: 'SET_VIEW_STATE',
+				payload: {
+					paymentTypes: res.data,
+				},
 			})
 		})
 		.catch((err) => {
