@@ -127,7 +127,7 @@ export default function CreatePropertyForm() {
 						console.log('File available at', downloadURL)
 						image_urls.push(downloadURL)
 						console.log('LENGTH AFTER URL --', image_urls.length)
-						if(image_urls.length === img_limit){
+						if (image_urls.length === img_limit) {
 							sendToDB()
 						}
 					})
@@ -160,7 +160,7 @@ export default function CreatePropertyForm() {
 						paddingLeft: '0px',
 						position: 'absolute',
 						backgroundColor: '#000408a1',
-						overflow: "hidden"
+						overflow: 'hidden',
 					}}
 				>
 					<div className="modal-dialog">
