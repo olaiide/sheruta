@@ -3,6 +3,7 @@ const initialState = {
 	notification: false,
 	message: false,
 	categories: [],
+	services: [],
 	amenities: [],
 	status: [],
 	states: [],

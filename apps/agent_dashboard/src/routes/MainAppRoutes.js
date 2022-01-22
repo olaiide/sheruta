@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import 'antd/dist/antd.css'
 import Login from '../pages/Auth/Login/Login'
 
 import '../ui_assets/css/icons.min.css'

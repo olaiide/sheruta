@@ -4,10 +4,10 @@ import store from "../store/store"
 
 export const getAgentProperties = () => dispatch => {
     axios(process.env.REACT_APP_API_URL + '/properties/?agent=' + store.getState().auth.agent.id, {
-        headers: {
-            Authorization:
-                `Bearer ${store.getState().auth.jwt}`,
-        },
+        // headers: {
+        //     Authorization:
+        //         `Bearer ${store.getState().auth.jwt}`,
+        // },
     })
         .then(res => {
             // console.log(res)

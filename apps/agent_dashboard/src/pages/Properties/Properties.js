@@ -2,8 +2,13 @@ import React from 'react'
 import Layout from '../../components/Layout/Layout'
 import { GrAdd } from 'react-icons/gr'
 import { Link } from 'react-router-dom'
+import EachProperty from './components/EachProperty'
+import { useSelector } from 'react-redux'
 
 export default function Properties() {
+
+	const { properties } = useSelector(state => state.agent);
+
 	return (
 		<Layout pageName={'properties'}>
 			<Link
@@ -27,6 +32,16 @@ export default function Properties() {
 					<GrAdd size={30} />
 				</button>
 			</Link>
+			<div className="row">
+				{properties.map((val, i) => {
+					return (
+						<div className="col-xl-4 col-sm-6" key={`prop-${i}`}>
+							<EachProperty data={val} />
+						</div>
+					)
+				})}
+				
+			</div>
 		</Layout>
 	)
 }

@@ -76,6 +76,20 @@ export const paymentTypes = () => (dispatch) => {
 			console.log(err)
 		})
 }
+export const getAllService = () => (dispatch) => {
+	axios(process.env.REACT_APP_API_URL + '/services')
+		.then((res) => {
+			dispatch({
+				type: 'SET_VIEW_STATE',
+				payload: {
+					services: res.data,
+				},
+			})
+		})
+		.catch((err) => {
+			console.log(err)
+		})
+}
 
 export const getAllSubscriptions = () => async (dispatch) => {
 	try {
