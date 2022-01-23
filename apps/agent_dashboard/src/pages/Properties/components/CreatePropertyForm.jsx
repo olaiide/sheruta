@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 import MultipleImgSelector from '../../../components/MultipleImgSelector/MultipleImgSelector'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import PropertyService from '../../../services/PropertyService'
-import { storage } from '../../../Firebase'
-import firebase from 'firebase'
+// import { storage } from '../../../Firebase'
+// import firebase from 'firebase'
 import { v4 as Uid } from 'uuid'
 import { useEffect } from 'react'
 import { Modal, Button } from 'antd'
@@ -96,44 +96,44 @@ export default function CreatePropertyForm() {
 		setMessage('Uploading Image')
 		setLoading(true)
 		setShowModal(true)
-		imageFiles.map((file, i) => {
-			var uploadTask = storage
-				.child(`images/properties/${agent.id}/${uid}/image_${i}`)
-				.put(file)
-			uploadTask.on(
-				'state_changed',
-				(snapshot) => {
-					var progress = Math.floor(
-						(snapshot.bytesTransferred / snapshot.totalBytes) * 100
-					)
-					console.log('Upload is ' + progress + '% done')
-					setProgress(progress)
-					switch (snapshot.state) {
-						case firebase.storage.TaskState.PAUSED: // or 'paused'
-							console.log('Upload is paused')
-							break
-						case firebase.storage.TaskState.RUNNING: // or 'running'
-							console.log('Upload is running')
-							break
-					}
-				},
-				(error) => {
-					// Handle unsuccessful uploads
-				},
-				() => {
-					// Handle successful uploads on complete
-					// For instance, get the download URL: https://firebasestorage.googleapis.com/...
-					uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-						console.log('File available at', downloadURL)
-						image_urls.push(downloadURL)
-						console.log('LENGTH AFTER URL --', image_urls.length)
-						if (image_urls.length === img_limit) {
-							sendToDB()
-						}
-					})
-				}
-			)
-		})
+		// imageFiles.map((file, i) => {
+		// 	var uploadTask = storage
+		// 		.child(`images/properties/${agent.id}/${uid}/image_${i}`)
+		// 		.put(file)
+		// 	uploadTask.on(
+		// 		'state_changed',
+		// 		(snapshot) => {
+		// 			var progress = Math.floor(
+		// 				(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+		// 			)
+		// 			console.log('Upload is ' + progress + '% done')
+		// 			setProgress(progress)
+		// 			switch (snapshot.state) {
+		// 				case firebase.storage.TaskState.PAUSED: // or 'paused'
+		// 					console.log('Upload is paused')
+		// 					break
+		// 				case firebase.storage.TaskState.RUNNING: // or 'running'
+		// 					console.log('Upload is running')
+		// 					break
+		// 			}
+		// 		},
+		// 		(error) => {
+		// 			// Handle unsuccessful uploads
+		// 		},
+		// 		() => {
+		// 			// Handle successful uploads on complete
+		// 			// For instance, get the download URL: https://firebasestorage.googleapis.com/...
+		// 			uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+		// 				console.log('File available at', downloadURL)
+		// 				image_urls.push(downloadURL)
+		// 				console.log('LENGTH AFTER URL --', image_urls.length)
+		// 				if (image_urls.length === img_limit) {
+		// 					sendToDB()
+		// 				}
+		// 			})
+		// 		}
+		// 	)
+		// })
 	}
 
 	useEffect(() => {
