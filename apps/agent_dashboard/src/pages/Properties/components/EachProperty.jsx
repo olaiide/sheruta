@@ -3,7 +3,7 @@ import React from 'react'
 export default function EachProperty({ data }) {
 	console.log(data)
 	return (
-		<div className="card shadow">
+		<div className="card shadow" style={{ zIndex: 0}}>
 			<div className="card-body">
 				<div className="pricing-badge">
 					<span className="badge text-white bg-primary">{data?.service?.name}</span>

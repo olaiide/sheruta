@@ -17,8 +17,9 @@ export default function Properties() {
 					position: 'fixed',
 					right: '30px',
 					bottom: '30px',
+					zIndex: 90,
 				}}
-			>
+				>
 				<button
 					className="btn btn-primary btn-rounded shadow-lg"
 					style={{
@@ -26,7 +27,6 @@ export default function Properties() {
 						fontWeight: 'bold',
 						width: '70px',
 						height: '70px',
-						zIndex: '20',
 					}}
 				>
 					<GrAdd size={30} />
