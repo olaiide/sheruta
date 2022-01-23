@@ -35,7 +35,7 @@ export default function Properties() {
 			<div className="row">
 				{properties.map((val, i) => {
 					return (
-						<div className="col-xl-4 col-sm-6" key={`prop-${i}`}>
+						<div className="col-xl-3 col-sm-4 col-lg-6" key={`prop-${i}`}>
 							<EachProperty data={val} />
 						</div>
 					)

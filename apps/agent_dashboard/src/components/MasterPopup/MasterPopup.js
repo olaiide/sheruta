@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAgentProperties } from '../../redux/actions/agent.action'
+// import { getAgentProperties } from '../../redux/actions/agent.action'
 import {
 	getAllAmenities,
 	getAllCategories,
@@ -13,7 +13,7 @@ import {
 
 export default function MasterPopup() {
 	const dispatch = useDispatch()
-	const { agent } = useSelector((state) => state.auth)
+	// const { agent } = useSelector((state) => state.auth)
 	useEffect(() => {
 		dispatch(getAllAmenities())
 		dispatch(getAllSubscriptions())
@@ -24,11 +24,11 @@ export default function MasterPopup() {
 		dispatch(getAllService())
 	}, [])
 
-	useEffect(() => {
-		if (agent) {
-			dispatch(getAgentProperties(agent?.id))
-		}
-	}, [])
+	// useEffect(() => {
+	// 	if (agent) {
+	// 		dispatch(getAgentProperties(agent?.id))
+	// 	}
+	// }, [])
 
 	return <div></div>
 }
