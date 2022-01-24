@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import logo from '../../assets/img/logo.png'
 import { useEffect } from 'react'
-import Global from '../../Global';
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutAgent } from '../../redux/actions/auth.action';
-import { Link } from 'react-router-dom';
+import Global from '../../Global'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutAgent } from '../../redux/actions/auth.action'
+import { Link } from 'react-router-dom'
+import EachNotificationSM from './EachNotificationSM'
 
 export default function Header() {
 	const [showNav, setShowNav] = useState(false)
@@ -13,9 +14,10 @@ export default function Header() {
 	const [showProfileOptions, setShowProfileOptions] = useState(false)
 	const toggleSideNav = () => {
 		setShowNav(!showNav)
-	};
+	}
 	const dispatch = useDispatch()
-	const {user} = useSelector(state => state.auth);
+	const { user } = useSelector((state) => state.auth)
+	const { notifications } = useSelector((state) => state.view)
 	let body = document.querySelector('body')
 
 	const _setMode = (newMode) => {
@@ -218,7 +220,9 @@ export default function Header() {
 								<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
 								<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
 							</svg>
-							<span className="badge bg-danger rounded-pill">5</span>
+							<span className="badge bg-danger rounded-pill">
+								{notifications.filter((x) => !x.seen).length}
+							</span>
 						</button>
 						<div
 							className={`dropdown-menu dropdown-menu-lg dropdown-menu-end p-0 ${
@@ -261,96 +265,10 @@ export default function Header() {
 													className="simplebar-content"
 													// style={{ padding: '0px' }}
 												>
-													<a href="#!" className="text-reset notification-item">
-														<div className="d-flex">
-															<div className="flex-shrink-0 me-3">
-																<img
-																	src="assets/images/users/avatar-3.jpg"
-																	className="rounded-circle avatar-sm"
-																	alt="user-pic"
-																/>
-															</div>
-															<div className="flex-grow-1">
-																<h6 className="mb-1">James Lemire</h6>
-																<div className="font-size-13 text-muted">
-																	<p className="mb-1">
-																		It will seem like simplified English.
-																	</p>
-																	<p className="mb-0">
-																		<i className="mdi mdi-clock-outline"></i>{' '}
-																		<span>1 hours ago</span>
-																	</p>
-																</div>
-															</div>
-														</div>
-													</a>
-													<a href="#!" className="text-reset notification-item">
-														<div className="d-flex">
-															<div className="flex-shrink-0 avatar-sm me-3">
-																<span className="avatar-title bg-primary rounded-circle font-size-16">
-																	<i className="bx bx-cart"></i>
-																</span>
-															</div>
-															<div className="flex-grow-1">
-																<h6 className="mb-1">Your order is placed</h6>
-																<div className="font-size-13 text-muted">
-																	<p className="mb-1">
-																		If several languages coalesce the grammar
-																	</p>
-																	<p className="mb-0">
-																		<i className="mdi mdi-clock-outline"></i>{' '}
-																		<span>3 min ago</span>
-																	</p>
-																</div>
-															</div>
-														</div>
-													</a>
-													<a href="#!" className="text-reset notification-item">
-														<div className="d-flex">
-															<div className="flex-shrink-0 avatar-sm me-3">
-																<span className="avatar-title bg-success rounded-circle font-size-16">
-																	<i className="bx bx-badge-check"></i>
-																</span>
-															</div>
-															<div className="flex-grow-1">
-																<h6 className="mb-1">Your item is shipped</h6>
-																<div className="font-size-13 text-muted">
-																	<p className="mb-1">
-																		If several languages coalesce the grammar
-																	</p>
-																	<p className="mb-0">
-																		<i className="mdi mdi-clock-outline"></i>{' '}
-																		<span>3 min ago</span>
-																	</p>
-																</div>
-															</div>
-														</div>
-													</a>
-
-													<a href="#!" className="text-reset notification-item">
-														<div className="d-flex">
-															<div className="flex-shrink-0 me-3">
-																<img
-																	src="assets/images/users/avatar-6.jpg"
-																	className="rounded-circle avatar-sm"
-																	alt="user-pic"
-																/>
-															</div>
-															<div className="flex-grow-1">
-																<h6 className="mb-1">Salena Layfield</h6>
-																<div className="font-size-13 text-muted">
-																	<p className="mb-1">
-																		As a skeptical Cambridge friend of mine
-																		occidental.
-																	</p>
-																	<p className="mb-0">
-																		<i className="mdi mdi-clock-outline"></i>{' '}
-																		<span>1 hours ago</span>
-																	</p>
-																</div>
-															</div>
-														</div>
-													</a>
+													
+													{notifications.filter(x => !x.seen).map((val, i) => {
+														return <EachNotificationSM key={`not-${i}`} data={val} />
+													})}
 												</div>
 											</div>
 										</div>
@@ -380,13 +298,13 @@ export default function Header() {
 								</div>
 							</div>
 							<div className="p-2 border-top d-grid">
-								<a
+								<Link
 									className="btn btn-sm btn-link font-size-14 text-center"
-									href="#c"
+									to="/notifications"
 								>
 									<i className="mdi mdi-arrow-right-circle me-1"></i>{' '}
 									<span>View More..</span>
-								</a>
+								</Link>
 							</div>
 						</div>
 					</div>

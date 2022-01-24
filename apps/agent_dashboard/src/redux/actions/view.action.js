@@ -1,10 +1,10 @@
 import axios from 'axios'
+import NotificationService from '../../services/NotificationsService'
 import SubscriptionService from '../../services/SubscriptionService'
 
 export const getAllCategories = () => (dispatch) => {
 	axios(process.env.REACT_APP_API_URL + '/categories')
 		.then((res) => {
-			console.log(res)
 			dispatch({
 				type: 'SET_VIEW_STATE',
 				payload: {
@@ -34,7 +34,6 @@ export const getAllAmenities = () => (dispatch) => {
 export const getAllStatus = () => (dispatch) => {
 	axios(process.env.REACT_APP_API_URL + '/status')
 		.then((res) => {
-			console.log(res)
 			dispatch({
 				type: 'SET_VIEW_STATE',
 				payload: {
@@ -50,7 +49,6 @@ export const getAllStatus = () => (dispatch) => {
 export const getAllStates = () => (dispatch) => {
 	axios(process.env.REACT_APP_API_URL + '/states')
 		.then((res) => {
-			console.log('States --', res)
 			dispatch({
 				type: 'SET_VIEW_STATE',
 				payload: {
@@ -103,4 +101,16 @@ export const getAllSubscriptions = () => async (dispatch) => {
 	} catch (error) {
         return Promise.reject(error);
     }
+}
+
+export const getAllNotifications = (user_id) => async (dispatch) => {
+	console.log('GETTING ALL')
+		const list = await NotificationService.getAuthUserNotification(user_id);
+		console.log('ALL NOT --', list.data)
+		dispatch({
+			type: 'SET_VIEW_STATE',
+			payload: {
+				notifications: list.data,
+			}
+		})
 }

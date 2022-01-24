@@ -17,7 +17,6 @@ export default class PropertyService {
 	 */
 	static async uploadProperty(data) {
 		const newProp = { ...this.formatPropertyData(data) }
-		console.log('SENDING --', newProp, API_URL)
 		const res = await axios(API_URL + `/properties`, {
 			data: newProp,
 			method: 'POST',
@@ -32,11 +31,21 @@ export default class PropertyService {
 		const _data = data
 		return {
 			..._data,
-			amenities: _data.amenities.map(val => val.id),
+			amenities: _data.amenities.map((val) => val.id),
 			categorie: _data.categorie.id,
 			payment_type: _data.payment_type.id,
 			service: _data.service.id,
 			statu: _data.service.id,
 		}
+	}
+
+	static async deleteProperty(property_id) {
+		const res = await axios(API_URL + `/properties/${property_id}`, {
+			method: 'DELETE',
+			headers: {
+				authorization: `Bearer ${Cookies.get('token')}`,
+			},
+		})
+		return res
 	}
 }

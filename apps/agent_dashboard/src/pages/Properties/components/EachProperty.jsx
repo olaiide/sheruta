@@ -1,9 +1,62 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { DeleteFirebaseImage } from '../../../services/FirebaseService'
+import PropertyService from '../../../services/PropertyService'
+import { Modal } from 'react-bootstrap'
 
 export default function EachProperty({ data }) {
-	console.log(data)
+	const [deleted, setDeleted] = useState(false)
+	const [askDelete, setAskDelete] = useState(false)
+	const [deleteLoading, setDeleteLoading] = useState(false)
+	const handleDelete = async () => {
+		try {
+			setDeleteLoading(true)
+			const res = await PropertyService.deleteProperty(data?.id)
+			res.data.image_urls.map((_, i) => {
+				DeleteFirebaseImage(
+					`images/properties/${data?.agent.id}/${data?.uid}/image_${i}`
+				)
+			})
+			if (res) {
+				setDeleteLoading(false)
+			}
+			setDeleted(true)
+		} catch (error) {
+			setDeleteLoading(false)
+			console.log('ERROR --', error)
+			return Promise.reject(error)
+		}
+	}
+
+	if (deleted) {
+		return null
+	}
+
 	return (
 		<div className="card shadow" style={{ zIndex: 0 }}>
+			<Modal
+				show={askDelete}
+				// onHide={() => setAskDelete(false)}
+				style={{ paddingTop: '30vh' }}
+			>
+				<Modal.Body className="text-center">
+					<h3>Are you sure you want to delete?</h3>
+					<button
+						disabled={deleteLoading}
+						className="w-50 btn btn-lg btn-danger mb-4 mt-4"
+						onClick={handleDelete}
+					>
+						{deleteLoading ? "Loading....": "Delete"}
+					</button>
+					<br />
+					<button
+						disabled={deleteLoading}
+						className="w-50 btn btn-lg btn-success"
+						onClick={() => setAskDelete(false)}
+					>
+						Cancel
+					</button>
+				</Modal.Body>
+			</Modal>
 			<div className="card-body p-0">
 				<div className="pricing-badge">
 					<span className="badge text-white bg-primary">
@@ -17,17 +70,17 @@ export default function EachProperty({ data }) {
 						height: '200px',
 						backgroundRepeat: 'no-repeat',
 						backgroundSize: '100%',
-						backgroundPosition: 'center'
+						backgroundPosition: 'center',
 					}}
 				>
 					{/* <img
 						src={data.image_urls[0]}
 						alt=""
-						class="img-fluid mx-auto d-block"
+						className="img-fluid mx-auto d-block"
 					/> */}
 				</div>
 				<div className="p-3">
-					<div className="d-flex justify-content-between align-items-end mt-4">
+					<div className=" justify-content-between align-items-end mt-4">
 						<div>
 							<h5 className="mb-3 text-truncate">
 								<a href="javascript: void(0);" className="text-dark fw-700">
@@ -48,15 +101,16 @@ export default function EachProperty({ data }) {
 						<div className="d-flex flex-wrap gap-2">
 							<button
 								type="button"
-								class="btn btn-primary waves-effect btn-label waves-light"
+								className="btn btn-primary waves-effect btn-label waves-light"
 							>
-								<i class="bx bx-smile label-icon"></i> Edit
+								<i className="bx bx-smile label-icon"></i> Edit
 							</button>
 							<button
+								onClick={() => setAskDelete(true)}
 								type="button"
-								class="btn btn-danger waves-effect btn-label waves-light ml-4"
+								className="btn btn-danger waves-effect btn-label waves-light ml-4"
 							>
-								<i class="bx bx-block label-icon"></i> Delete
+								<i className="bx bx-block label-icon"></i> Delete
 							</button>
 						</div>
 					</p>

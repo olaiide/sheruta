@@ -12,6 +12,7 @@ import {
 import { BiUser, BiBuildings, BiBell } from 'react-icons/bi'
 import { RiChat3Line } from 'react-icons/ri'
 import { IoAnalyticsSharp } from 'react-icons/io5'
+import { IoMdAdd } from 'react-icons/io'
 import { HiOutlineUserGroup } from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutAgent } from '../../redux/actions/auth.action'
@@ -36,8 +37,9 @@ const EachNav = ({ Icon, title, route, count, active, onClick }) => {
 }
 
 export default function SideNav({ pageName }) {
-	const dispatch = useDispatch();
-	const { user } = useSelector(state => state.auth);
+	const dispatch = useDispatch()
+	const { user } = useSelector((state) => state.auth)
+	const { notifications } = useSelector((state) => state.view)
 
 	return (
 		<div className="vertical-menu mm-active">
@@ -111,11 +113,17 @@ export default function SideNav({ pageName }) {
 												active={pageName === 'properties'}
 											/>
 											<EachNav
+												title="Add Properties"
+												route="/properties/create"
+												Icon={<IoMdAdd />}
+												active={pageName === 'properties_create'}
+											/>
+											<EachNav
 												title="Notifications"
 												route="/notifications"
 												Icon={<BiBell />}
 												active={pageName === 'notifications'}
-												count={4}
+												count={notifications.filter((x) => !x.seen).length}
 											/>
 
 											<li className="menu-title mt-2" data-key="t-components">

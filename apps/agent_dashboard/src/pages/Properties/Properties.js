@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Layout from '../../components/Layout/Layout'
 import { GrAdd } from 'react-icons/gr'
 import { Link } from 'react-router-dom'
 import EachProperty from './components/EachProperty'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAgentProperties } from '../../redux/actions/agent.action'
 
 export default function Properties() {
-
-	const { properties } = useSelector(state => state.agent);
+	const dispatch = useDispatch()
+	const { properties } = useSelector((state) => state.agent)
+	const { agent } = useSelector((state) => state.auth)
+	useEffect(() => {
+		dispatch(getAgentProperties(agent?.id))
+	}, [])
 
 	return (
 		<Layout pageName={'properties'}>
@@ -19,7 +24,7 @@ export default function Properties() {
 					bottom: '30px',
 					zIndex: 90,
 				}}
-				>
+			>
 				<button
 					className="btn btn-primary btn-rounded shadow-lg"
 					style={{
@@ -40,7 +45,6 @@ export default function Properties() {
 						</div>
 					)
 				})}
-				
 			</div>
 		</Layout>
 	)

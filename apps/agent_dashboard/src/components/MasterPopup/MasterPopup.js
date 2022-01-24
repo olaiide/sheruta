@@ -4,6 +4,7 @@ import { getAgentProperties } from '../../redux/actions/agent.action'
 import {
 	getAllAmenities,
 	getAllCategories,
+	getAllNotifications,
 	getAllService,
 	getAllStates,
 	getAllStatus,
@@ -13,7 +14,7 @@ import {
 
 export default function MasterPopup() {
 	const dispatch = useDispatch()
-	const { agent } = useSelector((state) => state.auth)
+	const { agent, user } = useSelector((state) => state.auth)
 	useEffect(() => {
 		dispatch(getAllAmenities())
 		dispatch(getAllSubscriptions())
@@ -27,8 +28,11 @@ export default function MasterPopup() {
 	useEffect(() => {
 		if (agent) {
 			dispatch(getAgentProperties(agent?.id))
+			dispatch(getAllNotifications(user?.id))
+		}else {
+			localStorage.removeItem('state')
 		}
-	}, [])
+	}, [agent])
 
 	return <div></div>
 }

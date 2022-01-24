@@ -7,7 +7,13 @@ import { storage } from '../../../Firebase'
 import firebase from 'firebase'
 import { v4 as Uid } from 'uuid'
 import { useEffect } from 'react'
-import { Modal, Button } from 'antd'
+import { Modal } from 'react-bootstrap'
+import { Progress } from 'antd'
+import { Navigate } from 'react-router-dom'
+import { notification } from 'antd';
+import { DeleteFirebaseImage } from '../../../services/FirebaseService'
+
+
 
 const uid = Uid()
 const img_limit = 4
@@ -39,9 +45,10 @@ export default function CreatePropertyForm() {
 	const [agency_fee, setAgencyFee] = useState(null)
 	const [caution_fee, setCautionFee] = useState(null)
 	const [loading, setLoading] = useState(false)
-	const [progress, setProgress] = useState(false)
+	const [progress, setProgress] = useState(0)
 	const [showModal, setShowModal] = useState(false)
 	const [message, setMessage] = useState(null)
+	const [done, setDone] = useState(false)
 
 	const sendToDB = async (e) => {
 		setMessage('Submitting..')
@@ -62,7 +69,7 @@ export default function CreatePropertyForm() {
 			service,
 			used,
 			categorie,
-			state,
+			// state,
 			amenities: _amenities,
 			legal_fee,
 			agency_fee,
@@ -74,11 +81,11 @@ export default function CreatePropertyForm() {
 		}
 		try {
 			const res = await PropertyService.uploadProperty(data)
-			console.log('res --', res.data)
 			setLoading(false)
 			setMessage('Property has been submitted')
 			setTimeout(() => {
 				setShowModal(false)
+				setDone(true)
 			}, 4000)
 		} catch (error) {
 			setLoading(false)
@@ -93,6 +100,31 @@ export default function CreatePropertyForm() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
+		if (imageFiles.length !== img_limit) {
+			notification.error({ message: `Please add ${img_limit} images` })
+			return
+		}
+		if (!categorie) {
+			notification.error({ message: `Please select a type` })
+			return
+		}
+		if (!statu) {
+			notification.error({ message: `Please select a status` })
+			return
+		}
+		if (!payment_type) {
+			notification.error({ message: `Please select a payment type` })
+			return
+		}
+		if (!service) {
+			notification.error({ message: `Please select a service` })
+			return
+		}
+		if (_amenities.length === 0) {
+			notification.error({ message: `Please select a at least one amenities` })
+			return
+		}
+
 		setMessage('Uploading Image')
 		setLoading(true)
 		setShowModal(true)
@@ -106,7 +138,7 @@ export default function CreatePropertyForm() {
 					var progress = Math.floor(
 						(snapshot.bytesTransferred / snapshot.totalBytes) * 100
 					)
-					console.log('Upload is ' + progress + '% done')
+					// console.log('Upload is ' + progress + '% done')
 					setProgress(progress)
 					switch (snapshot.state) {
 						case firebase.storage.TaskState.PAUSED: // or 'paused'
@@ -119,14 +151,19 @@ export default function CreatePropertyForm() {
 				},
 				(error) => {
 					// Handle unsuccessful uploads
+					console.log('ERROR UPLOADING --', error);
+					image_urls.map((_, i) => {
+						DeleteFirebaseImage(
+							`images/properties/${agent.id}/${uid}/image_${i}`
+						)
+					})
 				},
 				() => {
 					// Handle successful uploads on complete
 					// For instance, get the download URL: https://firebasestorage.googleapis.com/...
 					uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-						console.log('File available at', downloadURL)
+						// console.log('File available at', downloadURL)
 						image_urls.push(downloadURL)
-						console.log('LENGTH AFTER URL --', image_urls.length)
 						if (image_urls.length === img_limit) {
 							sendToDB()
 						}
@@ -136,47 +173,36 @@ export default function CreatePropertyForm() {
 		})
 	}
 
+
 	useEffect(() => {
 		if (image_urls.length === img_limit) {
 			sendToDB()
 		}
-		console.log('LENGTH --', image_urls.length)
-		console.log('URLS ===', image_urls)
 	}, [image_urls])
+
+	if (done) {
+		return <Navigate to="/properties" />
+	}
 
 	return (
 		<div className="row">
-			{showModal && (
-				<div
-					id="myModal"
-					className={`modal fade ${showModal && 'show'} pt-5`}
-					tabindex="-1"
-					aria-labelledby="myModalLabel"
-					data-bs-scroll="true"
-					aria-modal="true"
-					role="dialog"
-					style={{
-						display: 'block',
-						paddingLeft: '0px',
-						position: 'absolute',
-						backgroundColor: '#000408a1',
-						overflow: 'hidden',
-					}}
-				>
-					<div className="modal-dialog">
-						<div className="modal-content">
-							<div className="modal-body text-center">
-								<h5>{message}</h5>
-								{/* <p>
-								Cras mattis consectetur purus sit amet fermentum. Cras justo
-								odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-								risus, porta ac consectetur ac, vestibulum at eros.
-							</p> */}
-							</div>
-						</div>
+			<Modal
+				show={showModal}
+				onHide={() => setShowModal(false)}
+				style={{ paddingTop: '30vh' }}
+			>
+				<div className="modal-content">
+					<div className="modal-body text-center mb-4">
+						<h3 className=" mt-2 mb-5">{message}</h3>
+						<Progress
+							type="circle"
+							percent={progress}
+							format={() => 'Done'}
+							strokeColor={'#74d65b'}
+						/>
 					</div>
 				</div>
-			)}
+			</Modal>
 			<div className="col-12">
 				<div className="card">
 					<div className="card-header">

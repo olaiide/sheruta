@@ -2,9 +2,9 @@ import React from 'react'
 import CreatePropertyForm from './components/CreatePropertyForm'
 import Layout from '../../components/Layout/Layout'
 
-export default function CreateProperty() {
+export default function CreateProperty(props) {
 	return (
-		<Layout>
+		<Layout pageName={'properties_create'}>
 			<CreatePropertyForm />
 		</Layout>
 	)
