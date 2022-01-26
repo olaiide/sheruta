@@ -105,7 +105,7 @@ export default function EachProperty({ data }) {
 									type="button"
 									className="btn btn-primary waves-effect btn-label waves-light"
 								>
-									<i className="bx bx-smile label-icon"></i> Edit
+									<i className="bx bx-pen label-icon"></i> Edit
 								</button>
 							</Link>
 							<button
@@ -113,7 +113,7 @@ export default function EachProperty({ data }) {
 								type="button"
 								className="btn btn-danger waves-effect btn-label waves-light ml-4"
 							>
-								<i className="bx bx-block label-icon"></i> Delete
+								<i className="bx bx-trash label-icon"></i> Delete
 							</button>
 						</div>
 					</p>
