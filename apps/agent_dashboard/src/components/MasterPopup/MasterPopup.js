@@ -11,9 +11,12 @@ import {
 	getAllSubscriptions,
 	paymentTypes,
 } from '../../redux/actions/view.action'
+import Cookies from 'js-cookie'
+import { logoutAgent } from '../../redux/actions/auth.action'
 
 export default function MasterPopup() {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
+	const token = Cookies.get('token');
 	const { agent, user } = useSelector((state) => state.auth)
 	useEffect(() => {
 		dispatch(getAllAmenities())
@@ -23,7 +26,7 @@ export default function MasterPopup() {
 		dispatch(getAllStates())
 		dispatch(paymentTypes())
 		dispatch(getAllService())
-	}, [])
+	}, [dispatch])
 
 	useEffect(() => {
 		if (agent) {
@@ -32,7 +35,13 @@ export default function MasterPopup() {
 		}else {
 			localStorage.removeItem('state')
 		}
-	}, [agent])
+	}, [agent, dispatch, user?.id]);
+
+	useEffect(() => {
+		if(!token){
+			dispatch(logoutAgent())
+		}
+	},[dispatch, token])
 
 	return <div></div>
 }

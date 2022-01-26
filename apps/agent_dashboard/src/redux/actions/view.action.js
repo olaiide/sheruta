@@ -104,9 +104,7 @@ export const getAllSubscriptions = () => async (dispatch) => {
 }
 
 export const getAllNotifications = (user_id) => async (dispatch) => {
-	console.log('GETTING ALL')
 		const list = await NotificationService.getAuthUserNotification(user_id);
-		console.log('ALL NOT --', list.data)
 		dispatch({
 			type: 'SET_VIEW_STATE',
 			payload: {

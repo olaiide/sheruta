@@ -1,10 +1,11 @@
 import { storage } from '../Firebase'
-export const DeleteFirebaseImage = (firebaseRef) => {
+export const DeleteFirebaseImage = async (firebaseRef) => {
 	// Create a reference to the file to delete
+	console.log('CALLED')
 	var desertRef = storage.child(firebaseRef)
 
 	// Delete the file
-	desertRef
+	const deleted = await desertRef
 		.delete()
 		.then(() => {
 			// File deleted successfully
@@ -13,5 +14,7 @@ export const DeleteFirebaseImage = (firebaseRef) => {
 		.catch((error) => {
 			// Uh-oh, an error occurred!
 			console.log('IMAGE DELETED ERROR == ', error)
+			return error
 		})
+	return deleted
 }

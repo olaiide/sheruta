@@ -19,6 +19,7 @@ import MasterPopup from '../components/MasterPopup/MasterPopup'
 import Properties from '../pages/Properties/Properties'
 import CreateProperty from '../pages/Properties/CreateProperty'
 import Notifications from '../pages/Notification/Notification'
+import EditProperty from '../pages/Properties/EditProperty'
 
 export default function MainAppRoutes() {
 	const { user } = useSelector((state) => state.auth)
@@ -36,6 +37,7 @@ export default function MainAppRoutes() {
 						<Route path="/" element={<Home />} />
 						<Route path="/properties" element={<Properties />} />
 						<Route path="/properties/create" element={<CreateProperty />} />
+						<Route path="/properties/edit/:property_id" element={<EditProperty />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/notifications" element={<Notifications />} />
 						<Route path="/logs" element={<Logs />} />

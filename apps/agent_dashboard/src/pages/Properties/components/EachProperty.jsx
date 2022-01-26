@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { DeleteFirebaseImage } from '../../../services/FirebaseService'
 import PropertyService from '../../../services/PropertyService'
 import { Modal } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 export default function EachProperty({ data }) {
 	const [deleted, setDeleted] = useState(false)
@@ -45,7 +46,7 @@ export default function EachProperty({ data }) {
 						className="w-50 btn btn-lg btn-danger mb-4 mt-4"
 						onClick={handleDelete}
 					>
-						{deleteLoading ? "Loading....": "Delete"}
+						{deleteLoading ? 'Loading....' : 'Delete'}
 					</button>
 					<br />
 					<button
@@ -83,7 +84,7 @@ export default function EachProperty({ data }) {
 					<div className=" justify-content-between align-items-end mt-4">
 						<div>
 							<h5 className="mb-3 text-truncate">
-								<a href="javascript: void(0);" className="text-dark fw-700">
+								<a href="#c" className="text-dark fw-700">
 									{data?.name}
 								</a>
 							</h5>
@@ -99,12 +100,14 @@ export default function EachProperty({ data }) {
 					</div>
 					<p className="text-muted mb-0 mt-4">
 						<div className="d-flex flex-wrap gap-2">
-							<button
-								type="button"
-								className="btn btn-primary waves-effect btn-label waves-light"
-							>
-								<i className="bx bx-smile label-icon"></i> Edit
-							</button>
+							<Link to={`/properties/edit/${data?.id}`}>
+								<button
+									type="button"
+									className="btn btn-primary waves-effect btn-label waves-light"
+								>
+									<i className="bx bx-smile label-icon"></i> Edit
+								</button>
+							</Link>
 							<button
 								onClick={() => setAskDelete(true)}
 								type="button"

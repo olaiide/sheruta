@@ -17,9 +17,23 @@ export default class PropertyService {
 	 */
 	static async uploadProperty(data) {
 		const newProp = { ...this.formatPropertyData(data) }
+		console.log('SENDING TO DB --', newProp);
 		const res = await axios(API_URL + `/properties`, {
 			data: newProp,
 			method: 'POST',
+			headers: {
+				authorization: `Bearer ${Cookies.get('token')}`,
+			},
+		})
+		return res
+	}
+
+	static async updateProperty(data, property_id) {
+		const newProp = { ...this.formatPropertyData(data) }
+		console.log('SENDING UPDATE ---', newProp);
+		const res = await axios(API_URL + `/properties/${property_id}`, {
+			data: newProp,
+			method: 'PUT',
 			headers: {
 				authorization: `Bearer ${Cookies.get('token')}`,
 			},
@@ -31,7 +45,7 @@ export default class PropertyService {
 		const _data = data
 		return {
 			..._data,
-			amenities: _data.amenities.map((val) => val.id),
+			// amenities: _data.amenities.map((val) => val.id),
 			categorie: _data.categorie.id,
 			payment_type: _data.payment_type.id,
 			service: _data.service.id,
@@ -46,6 +60,11 @@ export default class PropertyService {
 				authorization: `Bearer ${Cookies.get('token')}`,
 			},
 		})
+		return res
+	}
+
+	static async getPropertyById(property_id) {
+		const res = await axios(API_URL + `/properties/${property_id}`)
 		return res
 	}
 }

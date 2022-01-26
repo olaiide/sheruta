@@ -33,7 +33,7 @@ export default function EachNotification({ data }) {
 				</h5>
 				<span className="text-muted">{data?.title}</span>{' '}
 				<span className="text-muted">
-					<b>{moment(data?.create_at).fromNow()}</b>
+					<b>{moment(data?.created_at).fromNow()}</b>
 				</span>
 			</div>
 			{!data?.seen && (

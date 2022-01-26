@@ -1,3 +1,6 @@
+/**
+ * DOCUMENTATION
+ */
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import MultipleImgSelector from '../../../components/MultipleImgSelector/MultipleImgSelector'
@@ -10,40 +13,47 @@ import { useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Progress } from 'antd'
 import { Navigate } from 'react-router-dom'
-import { notification } from 'antd';
+import { notification } from 'antd'
 import { DeleteFirebaseImage } from '../../../services/FirebaseService'
-
-
 
 const uid = Uid()
 const img_limit = 4
 
-export default function CreatePropertyForm() {
+export default function CreatePropertyForm({ data }) {
 	const { categories, amenities, status, paymentTypes, services } = useSelector(
 		(state) => state.view
 	)
 	const { agent } = useSelector((state) => state.auth)
-	const [imageFiles, setImageFiles] = useState([])
-	const [name, setName] = useState(null)
-	const [bedroom, setBedroom] = useState(null)
-	const [bathroom, setBathroom] = useState(null)
-	const [toilet, setToilet] = useState(null)
-	const [price, setPrice] = useState(null)
-	const [description, setDescription] = useState(null)
-	const [statu, setStatu] = useState(null)
-	const [sittingroom, setSittingRoom] = useState(null)
-	const [image_urls, set_image_urls] = useState([])
-	const [google_location, setGoogleLocation] = useState(null)
-	const [location, setLocation] = useState(null)
-	const [payment_type, setPaymentType] = useState(null)
-	const [service, setService] = useState(null)
-	const [used, setUsed] = useState(true)
-	const [categorie, setCategorie] = useState(null)
-	const [state, setState] = useState(null)
-	const [_amenities, setAmenities] = useState([])
-	const [legal_fee, setLegalFee] = useState(null)
-	const [agency_fee, setAgencyFee] = useState(null)
-	const [caution_fee, setCautionFee] = useState(null)
+	const [imageFiles, setImageFiles] = useState(data ? data?.image_urls : [])
+	const [name, setName] = useState(data ? data?.name : null)
+	const [bedroom, setBedroom] = useState(data ? data?.bedroom : null)
+	const [bathroom, setBathroom] = useState(data ? data?.bathroom : null)
+	const [toilet, setToilet] = useState(data ? data?.toilet : null)
+	const [price, setPrice] = useState(data ? data?.price : null)
+	const [description, setDescription] = useState(
+		data ? data?.description : null
+	)
+	const [statu, setStatu] = useState(data ? data?.statu : null)
+	const [sittingroom, setSittingRoom] = useState(
+		data ? data?.sittingroom : null
+	)
+	let [image_urls] = useState([])
+	const [google_location, setGoogleLocation] = useState(
+		data ? data?.google_location : null
+	)
+	const [location, setLocation] = useState(data ? data?.location : null)
+	const [payment_type, setPaymentType] = useState(
+		data ? data?.payment_type : null
+	)
+	const [service, setService] = useState(data ? data?.service : null)
+	const [used] = useState(true)
+	const [categorie, setCategorie] = useState(data ? data?.categorie : null)
+	const [_amenities, setAmenities] = useState(
+		data ? data?.amenities.map((x) => x?.id) : []
+	)
+	const [legal_fee, setLegalFee] = useState(data ? data?.legal_fee : null)
+	const [agency_fee, setAgencyFee] = useState(data ? data?.agency_fee : null)
+	const [caution_fee, setCautionFee] = useState(data ? data?.caution_fee : null)
 	const [loading, setLoading] = useState(false)
 	const [progress, setProgress] = useState(0)
 	const [showModal, setShowModal] = useState(false)
@@ -53,7 +63,7 @@ export default function CreatePropertyForm() {
 	const sendToDB = async (e) => {
 		setMessage('Submitting..')
 		setLoading(true)
-		let data = {
+		let _data = {
 			name,
 			bedroom,
 			bathroom,
@@ -74,13 +84,15 @@ export default function CreatePropertyForm() {
 			legal_fee,
 			agency_fee,
 			caution_fee,
-			uid,
+			uid: data ? data.uid : uid,
 			agent: agent.id,
 			state: agent?.state,
 			country: agent?.country,
 		}
 		try {
-			const res = await PropertyService.uploadProperty(data)
+			const res = data
+				? await PropertyService.updateProperty(_data, data?.id)
+				: await PropertyService.uploadProperty(_data)
 			setLoading(false)
 			setMessage('Property has been submitted')
 			setTimeout(() => {
@@ -88,6 +100,9 @@ export default function CreatePropertyForm() {
 				setDone(true)
 			}, 4000)
 		} catch (error) {
+			image_urls.map((_, i) => {
+				DeleteFirebaseImage(`images/properties/${agent.id}/${uid}/image_${i}`)
+			})
 			setLoading(false)
 			setMessage('There was an error, please try again')
 			setTimeout(() => {
@@ -128,51 +143,71 @@ export default function CreatePropertyForm() {
 		setMessage('Uploading Image')
 		setLoading(true)
 		setShowModal(true)
-		imageFiles.map((file, i) => {
-			var uploadTask = storage
-				.child(`images/properties/${agent.id}/${uid}/image_${i}`)
-				.put(file)
-			uploadTask.on(
-				'state_changed',
-				(snapshot) => {
-					var progress = Math.floor(
-						(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+		
+		if(image_urls.length === img_limit){
+			sendToDB()
+		}
+		imageFiles.filter(x => typeof x !== 'string').map((file, i) => {
+				var uploadTask = storage
+					.child(
+						`images/properties/${agent.id}/${data ? data?.uid : uid}/image_${i}`
 					)
-					// console.log('Upload is ' + progress + '% done')
-					setProgress(progress)
-					switch (snapshot.state) {
-						case firebase.storage.TaskState.PAUSED: // or 'paused'
-							console.log('Upload is paused')
-							break
-						case firebase.storage.TaskState.RUNNING: // or 'running'
-							console.log('Upload is running')
-							break
-					}
-				},
-				(error) => {
-					// Handle unsuccessful uploads
-					console.log('ERROR UPLOADING --', error);
-					image_urls.map((_, i) => {
-						DeleteFirebaseImage(
-							`images/properties/${agent.id}/${uid}/image_${i}`
+					.put(file)
+				uploadTask.on(
+					'state_changed',
+					(snapshot) => {
+						var progress = Math.floor(
+							(snapshot.bytesTransferred / snapshot.totalBytes) * 100
 						)
-					})
-				},
-				() => {
-					// Handle successful uploads on complete
-					// For instance, get the download URL: https://firebasestorage.googleapis.com/...
-					uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-						// console.log('File available at', downloadURL)
-						image_urls.push(downloadURL)
-						if (image_urls.length === img_limit) {
-							sendToDB()
+						// console.log('Upload is ' + progress + '% done')
+						setProgress(progress)
+						switch (snapshot.state) {
+							case firebase.storage.TaskState.PAUSED: // or 'paused'
+								console.log('Upload is paused')
+								break
+							case firebase.storage.TaskState.RUNNING: // or 'running'
+								console.log('Upload is running')
+								break
+							default:
+								break
 						}
-					})
-				}
-			)
+					},
+					(error) => {
+						// Handle unsuccessful uploads
+						console.log('ERROR UPLOADING --', error)
+						image_urls.map((_, i) => {
+							DeleteFirebaseImage(
+								`images/properties/${agent.id}/${uid}/image_${i}`
+							)
+						})
+					},
+					() => {
+						// Handle successful uploads on complete
+						// For instance, get the download URL: https://firebasestorage.googleapis.com/...
+						uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+							image_urls.push(downloadURL);
+							// image_urls.splice(i, 1);
+							if(data){
+								// setImageFiles([...imageFiles, downloadURL]);
+								if(imageFiles.length === img_limit){
+									sendToDB();
+								}
+							}else {
+								if (image_urls.length === img_limit) {
+									sendToDB()
+								}
+							}
+						})
+					}
+				)
 		})
 	}
 
+	const handleUpdate = (e) => {
+		e.preventDefault()
+		image_urls = imageFiles.filter(x => typeof x === 'string')
+		handleSubmit(e)
+	}
 
 	useEffect(() => {
 		if (image_urls.length === img_limit) {
@@ -188,7 +223,7 @@ export default function CreatePropertyForm() {
 		<div className="row">
 			<Modal
 				show={showModal}
-				onHide={() => setShowModal(false)}
+				// onHide={() => setShowModal(false)}
 				style={{ paddingTop: '30vh' }}
 			>
 				<div className="modal-content">
@@ -206,11 +241,13 @@ export default function CreatePropertyForm() {
 			<div className="col-12">
 				<div className="card">
 					<div className="card-header">
-						<h2 className="card-title">Property Information</h2>
+						<h2 className="card-title">
+							{data ? 'Edit Property' : 'Property Information'}
+						</h2>
 						<p className="card-title-desc">Fill all information below</p>
 					</div>
 					<div className="card-body">
-						<form onSubmit={handleSubmit}>
+						<form onSubmit={data ? handleUpdate : handleSubmit}>
 							<div className="row">
 								<div className="col-sm-6">
 									<div className="mb-3">
@@ -399,7 +436,7 @@ export default function CreatePropertyForm() {
 															disabled={loading}
 															onClick={() => setCategorie(val)}
 															className={`btn ${
-																categorie === val
+																categorie?.id === val?.id
 																	? 'btn-primary'
 																	: 'border-primary'
 															}  waves-effect waves-light`}
@@ -423,7 +460,9 @@ export default function CreatePropertyForm() {
 															disabled={loading}
 															onClick={() => setStatu(val)}
 															className={`btn ${
-																statu === val ? 'btn-primary' : 'border-primary'
+																statu?.id === val?.id
+																	? 'btn-primary'
+																	: 'border-primary'
 															}  waves-effect waves-light`}
 														>
 															{val?.name}
@@ -444,7 +483,7 @@ export default function CreatePropertyForm() {
 															disabled={loading}
 															onClick={() => setPaymentType(val)}
 															className={`btn ${
-																payment_type === val
+																payment_type?.id === val?.id
 																	? 'btn-primary'
 																	: 'border-primary'
 															}  waves-effect waves-light`}
@@ -467,7 +506,7 @@ export default function CreatePropertyForm() {
 															disabled={loading}
 															onClick={() => setService(val)}
 															className={`btn ${
-																service === val
+																service?.id === val?.id
 																	? 'btn-primary'
 																	: 'border-primary'
 															}  waves-effect waves-light`}
@@ -480,7 +519,9 @@ export default function CreatePropertyForm() {
 										</div>
 									</div>
 									<div className="mb-3">
-										<label className="control-label">Amenities</label>
+										<label className="control-label">
+											Amenities (Select multiple)
+										</label>
 										<div className="card-body p-0  pb-2">
 											<div className="d-flex flex-wrap gap-2">
 												{amenities.map((val) => {
@@ -489,16 +530,16 @@ export default function CreatePropertyForm() {
 															type="button"
 															disabled={loading}
 															onClick={() => {
-																if (_amenities.includes(val)) {
+																if (_amenities.includes(val?.id)) {
 																	setAmenities(
-																		_amenities.filter((x) => x !== val)
+																		_amenities.filter((x) => x !== val?.id)
 																	)
 																} else {
-																	setAmenities([..._amenities, val])
+																	setAmenities([..._amenities, val?.id])
 																}
 															}}
 															className={`btn ${
-																_amenities.includes(val)
+																_amenities.includes(val?.id)
 																	? 'btn-primary'
 																	: 'border-primary'
 															}  waves-effect waves-light`}
@@ -528,7 +569,7 @@ export default function CreatePropertyForm() {
 									</div>
 								</div>
 							</div>
-							<label className="mt-3">Images</label>
+							<label className="mt-3">Images ({img_limit} images)</label>
 							<hr className="mt-1" />
 							<MultipleImgSelector
 								limit={img_limit}
@@ -537,20 +578,15 @@ export default function CreatePropertyForm() {
 								removeFile={(e) => {
 									setImageFiles(imageFiles.filter((x) => x !== e))
 								}}
+								uid={data ? data?.uid : uid}
 							/>
 							<hr />
 							<div className="d-flex flex-wrap gap-2">
 								<button
 									type="submit"
-									className="btn btn-primary waves-effect waves-light"
+									className="btn btn-primary waves-effect waves-light btn-lg"
 								>
-									Save Changes
-								</button>
-								<button
-									type="button"
-									className="btn btn-secondary waves-effect waves-light"
-								>
-									Cancel
+									{data ? 'Update' : 'Upload'}
 								</button>
 							</div>
 						</form>
