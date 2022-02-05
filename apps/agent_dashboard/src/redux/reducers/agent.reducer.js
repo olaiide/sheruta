@@ -2,7 +2,8 @@
 
 const initialState = {
     properties: [],
-    loading: false
+    loading: false,
+	pending_agents: []
 }
 
 const AgentReducer = (state = initialState, { type, payload }) => {

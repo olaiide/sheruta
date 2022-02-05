@@ -14,6 +14,7 @@ import { RiChat3Line } from 'react-icons/ri'
 import { IoAnalyticsSharp } from 'react-icons/io5'
 import { IoMdAdd } from 'react-icons/io'
 import { HiOutlineUserGroup } from 'react-icons/hi'
+import { FaPeopleCarry } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutAgent } from '../../redux/actions/auth.action'
 
@@ -25,7 +26,7 @@ const EachNav = ({ Icon, title, route, count, active, onClick }) => {
 		>
 			<Link to={route} className={active ? 'active' : ''}>
 				{Icon}
-				{count && (
+				{count  && (
 					<span className="badge rounded-pill bg-soft-success text-success float-end">
 						{count}
 					</span>
@@ -78,6 +79,12 @@ export default function SideNav({ pageName }) {
 												route="/logs"
 												Icon={<FiDatabase />}
 												active={pageName === 'logs'}
+											/>
+											<EachNav
+												title="Agents"
+												route="/agents"
+												Icon={<FaPeopleCarry />}
+												active={pageName === 'agent'}
 											/>
 											<EachNav
 												title="Blog"
