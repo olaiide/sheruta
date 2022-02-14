@@ -1,5 +1,6 @@
 const initialState = {
-    conversations: []
+    conversations: [],
+    messages: [],
 }
 
 export default (state = initialState, { type, payload }) => {

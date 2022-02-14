@@ -13,7 +13,7 @@ import {
 } from '../../redux/actions/view.action'
 import Cookies from 'js-cookie'
 import { logoutAgent } from '../../redux/actions/auth.action'
-import { getAllConversations } from '../../redux/actions/messages.action'
+import { getAllConversations, getUnreadMessageCount } from '../../redux/actions/messages.action'
 
 export default function MasterPopup() {
 	const dispatch = useDispatch();
@@ -34,6 +34,7 @@ export default function MasterPopup() {
 			dispatch(getAgentProperties(agent?.id))
 			dispatch(getAllNotifications(user?.id))
 			dispatch(getAllConversations(user?.id))
+			dispatch(getUnreadMessageCount(user?.id))
 		}else {
 			localStorage.removeItem('state')
 		}
