@@ -26,7 +26,7 @@ const EachNav = ({ Icon, title, route, count, active, onClick }) => {
 		>
 			<Link to={route} className={active ? 'active' : ''}>
 				{Icon}
-				{count  && (
+				{count > 0 && (
 					<span className="badge rounded-pill bg-soft-success text-success float-end">
 						{count}
 					</span>
@@ -42,6 +42,9 @@ export default function SideNav({ pageName }) {
 	const { user } = useSelector((state) => state.auth)
 	const { notifications } = useSelector((state) => state.view)
 
+	if (!user) {
+		return null
+	}
 	return (
 		<div className="vertical-menu mm-active">
 			<div data-simplebar="init" className="h-100 mm-show">
@@ -64,52 +67,57 @@ export default function SideNav({ pageName }) {
 											className="metismenu list-unstyled mm-show"
 											id="side-menu"
 										>
-											<li className="menu-title" data-key="t-menu">
-												Admin
-											</li>
+											{parseInt(user.id) ==
+												parseInt(process.env.REACT_APP_ADMIN_ID) && (
+												<>
+													<li className="menu-title" data-key="t-menu">
+														Admin
+													</li>
 
-											<EachNav
-												title="Home"
-												route="/"
-												Icon={<FiHome />}
-												active={pageName === 'home'}
-											/>
-											<EachNav
-												title="Logs"
-												route="/logs"
-												Icon={<FiDatabase />}
-												active={pageName === 'logs'}
-											/>
-											<EachNav
-												title="Agents"
-												route="/agents"
-												Icon={<FaPeopleCarry />}
-												active={pageName === 'agent'}
-											/>
-											<EachNav
-												title="Blog"
-												route="/blog"
-												Icon={<FiEdit3 />}
-												active={pageName === 'blog'}
-											/>
-											<EachNav
-												title="Analytics"
-												route="/analytics"
-												Icon={<IoAnalyticsSharp />}
-												active={pageName === 'analytics'}
-											/>
-											<EachNav
-												title="Users"
-												route="/users"
-												Icon={<FiUsers />}
-												active={pageName === 'users'}
-											/>
-											<EachNav
-												title="Email"
-												route="/email"
-												Icon={<FiMail />}
-												active={pageName === 'email'}
-											/>
+													<EachNav
+														title="Home"
+														route="/"
+														Icon={<FiHome />}
+														active={pageName === 'home'}
+													/>
+													<EachNav
+														title="Logs"
+														route="/logs"
+														Icon={<FiDatabase />}
+														active={pageName === 'logs'}
+													/>
+													<EachNav
+														title="Agents"
+														route="/agents"
+														Icon={<FaPeopleCarry />}
+														active={pageName === 'agent'}
+													/>
+													<EachNav
+														title="Blog"
+														route="/blog"
+														Icon={<FiEdit3 />}
+														active={pageName === 'blog'}
+													/>
+													<EachNav
+														title="Analytics"
+														route="/analytics"
+														Icon={<IoAnalyticsSharp />}
+														active={pageName === 'analytics'}
+													/>
+													<EachNav
+														title="Users"
+														route="/users"
+														Icon={<FiUsers />}
+														active={pageName === 'users'}
+													/>
+													<EachNav
+														title="Email"
+														route="/email"
+														Icon={<FiMail />}
+														active={pageName === 'email'}
+													/>
+												</>
+											)}
 											<li className="menu-title" data-key="t-menu">
 												Pages
 											</li>
@@ -133,21 +141,28 @@ export default function SideNav({ pageName }) {
 												count={notifications.filter((x) => !x.seen).length}
 											/>
 
-											<li className="menu-title mt-2" data-key="t-components">
-												Agents
-											</li>
+											{process.env.NODE_ENV === 'development' && (
+												<>
+													<li
+														className="menu-title mt-2"
+														data-key="t-components"
+													>
+														Agents
+													</li>
 
-											<EachNav
-												title="Join Paddy"
-												route="/"
-												Icon={<HiOutlineUserGroup />}
-											/>
-											<EachNav
-												title="Chat"
-												route="/"
-												Icon={<RiChat3Line />}
-												count={44}
-											/>
+													<EachNav
+														title="Join Paddy"
+														route="/"
+														Icon={<HiOutlineUserGroup />}
+													/>
+													<EachNav
+														title="Chat"
+														route="/messages"
+														Icon={<RiChat3Line />}
+														count={44}
+													/>
+												</>
+											)}
 											<li className="menu-title mt-2" data-key="t-components">
 												Account
 											</li>

@@ -149,7 +149,7 @@ export default function Header() {
 						</div>
 					</div> */}
 
-					<div className="dropdown d-none d-sm-inline-block">
+					<div className="dropdown d-sm-inline-block">
 						<button
 							type="button"
 							className="btn header-item"

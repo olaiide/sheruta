@@ -9,7 +9,6 @@ const Logs = (props) => {
 	useEffect(() => {
 		axios(process.env.REACT_APP_API_URL + '/logs/?_sort=created_at:desc')
 			.then((res) => {
-				console.log(res)
 				setLogs(res.data)
 			})
 			.catch((err) => {

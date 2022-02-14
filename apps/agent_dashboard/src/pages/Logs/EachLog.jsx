@@ -54,7 +54,6 @@ const TimelineBox = ({ log }) => {
 }
 
 export default function EachLog({ log }) {
-	console.log('EACH LOG --', log)
 	const [user, setUser] = useState(log.users_permissions_user)
 
 	function isOdd(num) {

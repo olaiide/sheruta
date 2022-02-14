@@ -21,6 +21,7 @@ import CreateProperty from '../pages/Properties/CreateProperty'
 import Notifications from '../pages/Notification/Notification'
 import EditProperty from '../pages/Properties/EditProperty'
 import Agents from '../pages/Agents/Agents'
+import Messages from '../pages/Messages/Messages'
 
 export default function MainAppRoutes() {
 	const { user } = useSelector((state) => state.auth)
@@ -35,18 +36,30 @@ export default function MainAppRoutes() {
 					</Routes>
 				) : (
 					<Routes>
-						<Route path="/" element={<Home />} />
+						{user?.id === process.env.REACT_APP_ADMIN_ID ? (
+							<>
+								<Route path="/" element={<Home />} />
+								<Route path="/agents" element={<Agents />} />
+								<Route path="/logs" element={<Logs />} />
+								<Route path="/blog" element={<Blog />} />
+								<Route path="/analytics" element={<Analyticss />} />
+								<Route path="/users" element={<Users />} />
+								<Route path="/email" element={<Email />} />
+							</>
+						) : (
+							<>
+								<Route path="/" element={<Properties />} />
+								<Route path="/messages" element={<Messages />} />
+							</>
+						)}
 						<Route path="/properties" element={<Properties />} />
-						<Route path="/agents" element={<Agents />} />
 						<Route path="/properties/create" element={<CreateProperty />} />
-						<Route path="/properties/edit/:property_id" element={<EditProperty />} />
+						<Route
+							path="/properties/edit/:property_id"
+							element={<EditProperty />}
+						/>
 						<Route path="/login" element={<Login />} />
 						<Route path="/notifications" element={<Notifications />} />
-						<Route path="/logs" element={<Logs />} />
-						<Route path="/blog" element={<Blog />} />
-						<Route path="/analytics" element={<Analyticss />} />
-						<Route path="/users" element={<Users />} />
-						<Route path="/email" element={<Email />} />
 						<Route path="/user/:user_id" element={<Profile />} />
 					</Routes>
 				)}

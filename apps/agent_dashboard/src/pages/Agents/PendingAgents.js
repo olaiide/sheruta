@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPendingAgents } from '../../redux/actions/agent.action'
-import EachAgent from './EachAgent'
+import EachAgent from './EachPendingAgent'
 
 export default function PendingAgents() {
 	const { pending_agents } = useSelector(state => state.agent);
-    const dispatch = useDispatch()
-
+    const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(getPendingAgents());
@@ -24,7 +23,7 @@ export default function PendingAgents() {
 			<div className="row">
 				{pending_agents.map((val, i) => {
 					return (
-						<EachAgent key={`agent-${i}`} data={val?.users_permissions_user} />
+						<EachAgent key={`agent-${i}`} data={val} />
 					)
 				})}
 			</div>
