@@ -186,23 +186,25 @@ export default function SideNav({ pageName }) {
 											/>
 										</ul>
 
-										<div className="card sidebar-alert shadow-none text-center mx-4 mb-0 mt-5">
-											<div className="card-body">
-												<img src="assets/images/giftbox.png" alt="" />
-												<div className="mt-4">
-													<h5 className="alertcard-title font-size-16">
-														Unlimited Access
-													</h5>
-													<p className="font-size-13">
-														Upgrade your plan from a Free trial, to select
-														‘Business Plan’.
-													</p>
-													<a href="#!" className="btn btn-primary mt-2">
-														Upgrade Now
-													</a>
+										{process.env.NODE_ENV === 'development' && (
+											<div className="card sidebar-alert shadow-none text-center mx-4 mb-0 mt-5">
+												<div className="card-body">
+													<img src="assets/images/giftbox.png" alt="" />
+													<div className="mt-4">
+														<h5 className="alertcard-title font-size-16">
+															Unlimited Access
+														</h5>
+														<p className="font-size-13">
+															Upgrade your plan from a Free trial, to select
+															‘Business Plan’.
+														</p>
+														<a href="#!" className="btn btn-primary mt-2">
+															Upgrade Now
+														</a>
+													</div>
 												</div>
 											</div>
-										</div>
+										)}
 									</div>
 								</div>
 							</div>

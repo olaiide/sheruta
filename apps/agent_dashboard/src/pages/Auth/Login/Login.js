@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import authBg from '../../../assets/img/auth-bg.jpg'
 import Logo from '../../../assets/img/logo.png'
+import NumbersHelper from '../../../helpers/Numbers'
 import { loginAgent } from '../../../redux/actions/auth.action'
+import Qt from './Qt'
 
 export default function Login() {
 	const dispatch = useDispatch()
@@ -30,6 +32,10 @@ export default function Login() {
 			}, 5000)
 		}
 	}, [error])
+
+	useEffect(() => {
+		console.log('THE NUMBER --', NumbersHelper.getRandomArbitrary(1, 4))
+	}, [])
 
 	return (
 		<div className="auth-page">
@@ -162,7 +168,7 @@ export default function Login() {
 											</div>
 										</form>
 
-										<div className="mt-5 text-center">
+										{/* <div className="mt-5 text-center">
 											<p className="text-muted mb-0">
 												Don't have an account ?{' '}
 												<a
@@ -173,7 +179,7 @@ export default function Login() {
 													Signup now{' '}
 												</a>{' '}
 											</p>
-										</div>
+										</div> */}
 									</div>
 								</div>
 							</div>
@@ -182,7 +188,9 @@ export default function Login() {
 					<div className="col-xxl-9 col-lg-8 col-md-7">
 						<div
 							className="auth-bg pt-md-5 p-4 d-flex"
-							style={{ backgroundImage: `url(${authBg})` }}
+							style={{
+								backgroundImage: `url(https://picsum.photos/200/300/?blur)`,
+							}}
 						>
 							<div className="bg-overlay"></div>
 							<ul className="bg-bubbles">
@@ -206,7 +214,7 @@ export default function Login() {
 											data-bs-ride="carousel"
 										>
 											<div className="carousel-indicators auth-carousel carousel-indicators-rounded justify-content-center mb-0">
-												<button
+												{/* <button
 													type="button"
 													data-bs-target="#reviewcarouselIndicators"
 													data-bs-slide-to="0"
@@ -218,7 +226,7 @@ export default function Login() {
 														className="avatar-md img-fluid rounded-circle d-block"
 														alt="..."
 													/>
-												</button>
+												</button> */}
 												<button
 													type="button"
 													data-bs-target="#reviewcarouselIndicators"
@@ -228,12 +236,12 @@ export default function Login() {
 													aria-current="true"
 												>
 													<img
-														src="assets/images/users/avatar-2.jpg"
+														src="https://media-exp1.licdn.com/dms/image/C4E03AQG5N1oZ1YmM4Q/profile-displayphoto-shrink_800_800/0/1594670746007?e=1650499200&v=beta&t=i7q0PkbgSq0XMn0K4tuPkA11s_NGn5sb3id6ChndCUI"
 														className="avatar-md img-fluid rounded-circle d-block"
 														alt="..."
 													/>
 												</button>
-												<button
+												{/* <button
 													type="button"
 													data-bs-target="#reviewcarouselIndicators"
 													data-bs-slide-to="2"
@@ -244,23 +252,24 @@ export default function Login() {
 														className="avatar-md img-fluid rounded-circle d-block"
 														alt="..."
 													/>
-												</button>
+												</button> */}
 											</div>
 											<div className="carousel-inner">
 												<div className="carousel-item active">
 													<div className="testi-contain text-center text-white">
 														<i className="bx bxs-quote-alt-left text-success display-6"></i>
 														<h4 className="mt-4 fw-medium lh-base text-white">
-															“We are the fastest growing flat sharing community
-															in the world. It is a pleasure to have you board”
+															{
+																Qt[
+																	NumbersHelper.getRandomArbitrary(0, Qt.length)
+																].q
+															}
 														</h4>
 														<div className="mt-4 pt-1 pb-5 mb-5">
 															<h5 className="font-size-16 text-white">
 																Ifeora Chukwuemeka
 															</h5>
-															<p className="mb-0 text-white-50">
-																Software Engineer
-															</p>
+															<p className="mb-0 text-white-50">Co Founder</p>
 														</div>
 													</div>
 												</div>
