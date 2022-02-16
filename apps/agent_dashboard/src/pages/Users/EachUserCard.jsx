@@ -1,6 +1,7 @@
 import moment from 'moment'
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import AdminMessager from '../../components/AdminMessager/AdminMessager'
 // import { Modal } from 'react-bootstrap';
 // import EmailSender from '../../components/EmailSender/EmailSender';
@@ -53,9 +54,9 @@ export default function EachUserCard({ user }) {
 						/>
 					<div className="flex-1 ms-3">
 						<h5 className="font-size-15 mb-1">
-							<a href="#c" className="text-dark">
+							<Link to={`/user/${user?.id}`} className="text-dark">
 								{user?.first_name} {user?.last_name}
-							</a>
+							</Link>
 						</h5>
 						<p className="text-muted mb-0">@{user?.username}</p>
 					</div>

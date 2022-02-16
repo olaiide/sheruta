@@ -189,7 +189,7 @@ export default function Login() {
 						<div
 							className="auth-bg pt-md-5 p-4 d-flex"
 							style={{
-								backgroundImage: `url(https://picsum.photos/200/300/?blur)`,
+								backgroundImage: `url(https://picsum.photos/200/600)`,
 							}}
 						>
 							<div className="bg-overlay"></div>
@@ -205,7 +205,7 @@ export default function Login() {
 								<li></li>
 								<li></li>
 							</ul>
-							<div className="row justify-content-center align-items-end">
+							<div className="w-100 row justify-content-center align-items-end">
 								<div className="col-xl-7">
 									<div className="p-0 p-sm-4 px-xl-0">
 										<div

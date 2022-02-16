@@ -2,6 +2,7 @@ import moment from 'moment'
 import React, { useState, useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
 import ReactJson from 'react-json-view'
+import { Link } from 'react-router-dom'
 
 const TimelineBox = ({ log }) => {
 	const [showLogs, setShowLogs] = useState(false)
@@ -14,7 +15,12 @@ const TimelineBox = ({ log }) => {
 		>
 			<Modal show={showLogs} onHide={() => setShowLogs(false)} size="lg">
 				<Modal.Header>
-					<button className='btn btn-sm btn-danger' onClick={() => setShowLogs(!showLogs)}>Close</button>
+					<button
+						className="btn btn-sm btn-danger"
+						onClick={() => setShowLogs(!showLogs)}
+					>
+						Close
+					</button>
 				</Modal.Header>
 				<Modal.Body>
 					<ReactJson src={log.log} />
@@ -30,9 +36,11 @@ const TimelineBox = ({ log }) => {
 			)}
 			<div className="event-content">
 				<div className="timeline-text">
-					<h3 className="font-size-18">
-						{user ? user.first_name + ' ' + user?.last_name : 'Someone'}
-					</h3>
+					<Link to={user ? `/user/${user?.id}`: `#`}>
+						<h3 className="font-size-18">
+							{user ? user.first_name + ' ' + user?.last_name : 'Someone'}
+						</h3>
+					</Link>
 					<p className="mb-0 mt-2 pt-1 text-muted">{log.heading}</p>
 					<p className="mb-0 mt-2 pt-1 text-muted fw-bold">
 						{moment(log.created_at).fromNow()}

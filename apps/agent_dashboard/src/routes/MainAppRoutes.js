@@ -2,11 +2,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import Login from '../pages/Auth/Login/Login'
 
+import '../ui_assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css'
 import '../ui_assets/css/icons.min.css'
 import '../ui_assets/css/preloader.min.css'
 import '../ui_assets/css/bootstrap.min.css'
 import '../ui_assets/css/app.min.css'
-import '../ui_assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css'
+
 import { useSelector } from 'react-redux'
 import Home from '../pages/Home/Home'
 import Logs from '../pages/Logs/Logs'
@@ -36,7 +37,7 @@ export default function MainAppRoutes() {
 					</Routes>
 				) : (
 					<Routes>
-						{user?.id === process.env.REACT_APP_ADMIN_ID ? (
+						{user?.id === parseInt(process.env.REACT_APP_ADMIN_ID) ? (
 							<>
 								<Route path="/" element={<Home />} />
 								<Route path="/agents" element={<Agents />} />
