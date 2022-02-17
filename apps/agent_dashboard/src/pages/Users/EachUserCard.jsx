@@ -3,12 +3,12 @@ import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import AdminMessager from '../../components/AdminMessager/AdminMessager'
-// import { Modal } from 'react-bootstrap';
-// import EmailSender from '../../components/EmailSender/EmailSender';
+import ProfileComponent from '../../components/Profile/ProfileComponent'
 
 export default function EachUserCard({ user }) {
 	// const [showEmail, setShowEmail] = useState(false)
 	const [showMessaer, setShowMessager] = useState(false)
+	const [showProfile, setShowProfile] = useState(false)
 	return (
 		<div className="card">
 			<Modal show={showMessaer} onExit={() => setShowMessager(false)}>
@@ -21,6 +21,25 @@ export default function EachUserCard({ user }) {
 						Cancel
 					</button>
 				</Modal.Body>
+			</Modal>
+			<Modal show={showProfile} onExit={() => setShowProfile(false)}>
+				<Modal.Header>
+					<button
+						className="btn btn-danger"
+						onClick={() => setShowProfile(false)}
+					>
+						Close
+					</button>
+				</Modal.Header>
+				<div className="container">
+					<ProfileComponent standalone _user_id={user?.id} />
+				</div>
+				<button
+					className="btn text-danger mt-3"
+					onClick={() => setShowProfile(false)}
+				>
+					Cancel
+				</button>
 			</Modal>
 			<div className="card-body">
 				<div className="dropdown float-end">
@@ -45,18 +64,19 @@ export default function EachUserCard({ user }) {
 						</a>
 					</div>
 				</div>
-				<div className="d-flex align-items-center">
-						<img
-							src={user?.avatar_url}
-							alt=""
-							width="60"
-							className=" rounded-circle img-thumbnail"
-						/>
+				<div
+					className="d-flex align-items-center"
+					onClick={() => setShowProfile(true)}
+				>
+					<img
+						src={user?.avatar_url}
+						alt=""
+						width="60"
+						className=" rounded-circle img-thumbnail"
+					/>
 					<div className="flex-1 ms-3">
 						<h5 className="font-size-15 mb-1">
-							<Link to={`/user/${user?.id}`} className="text-dark">
-								{user?.first_name} {user?.last_name}
-							</Link>
+							{user?.first_name} {user?.last_name}
 						</h5>
 						<p className="text-muted mb-0">@{user?.username}</p>
 					</div>

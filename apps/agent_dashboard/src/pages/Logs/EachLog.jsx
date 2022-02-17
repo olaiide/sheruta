@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
 import ReactJson from 'react-json-view'
 import { Link } from 'react-router-dom'
+import ProfileComponent from '../../components/Profile/ProfileComponent'
 
 const TimelineBox = ({ log }) => {
 	const [showLogs, setShowLogs] = useState(false)
+	const [showProfile, setShowProfile] = useState(false)
 	const user = log?.users_permissions_user
 	return (
 		<div
@@ -27,6 +29,27 @@ const TimelineBox = ({ log }) => {
 				</Modal.Body>
 			</Modal>
 			{user && (
+				<Modal show={showProfile} onExit={() => setShowProfile(false)}>
+					<Modal.Header>
+						<button
+							className="btn btn-danger"
+							onClick={() => setShowProfile(false)}
+						>
+							Close
+						</button>
+					</Modal.Header>
+					<div className="container">
+						<ProfileComponent standalone _user_id={user?.id} />
+					</div>
+					<button
+						className="btn text-danger mt-3"
+						onClick={() => setShowProfile(false)}
+					>
+						Cancel
+					</button>
+				</Modal>
+			)}
+			{user && (
 				<div className="timeline-date bg-primary text-center rounded">
 					<h3 className="text-white mb-0">{user && user.id}</h3>
 					<p className="mb-0 text-white-50">
@@ -36,11 +59,9 @@ const TimelineBox = ({ log }) => {
 			)}
 			<div className="event-content">
 				<div className="timeline-text">
-					<Link to={user ? `/user/${user?.id}`: `#`}>
-						<h3 className="font-size-18">
-							{user ? user.first_name + ' ' + user?.last_name : 'Someone'}
-						</h3>
-					</Link>
+					<h3 className="font-size-18" onClick={() => setShowProfile(true)}>
+						{user ? user.first_name + ' ' + user?.last_name : 'Someone'}
+					</h3>
 					<p className="mb-0 mt-2 pt-1 text-muted">{log.heading}</p>
 					<p className="mb-0 mt-2 pt-1 text-muted fw-bold">
 						{moment(log.created_at).fromNow()}
