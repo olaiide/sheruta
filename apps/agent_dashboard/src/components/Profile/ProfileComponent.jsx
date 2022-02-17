@@ -44,7 +44,7 @@ export default function ProfileComponent({ _user_id, standalone }) {
 	return (
 		<div className={`container `}>
 			<div className="row justify-content-center">
-				<div className="col-lg-8 col-md-8 col-sm-12 col-xl-8 p-0">
+				<div className="col-lg-12 col-md-8 col-sm-12 col-xl-8 p-0">
 					{pageState === 'loading' && (
 						<div className="p-5 d-flex justify-content-center">
 							<h4 className="pt-5">Loading..</h4>

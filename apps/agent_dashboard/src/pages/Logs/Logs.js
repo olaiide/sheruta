@@ -20,7 +20,7 @@ const Logs = (props) => {
 
 	return (
 		<Layout pageName={'logs'}>
-			<div className="row">
+			{/* <div className="row">
 				<div className="col-lg-12">
 					<div className="row justify-content-center">
 						<div className="col-xl-10">
@@ -28,14 +28,14 @@ const Logs = (props) => {
 								<div className="timeline-container">
 									<div className="timeline-end">
 										<p>Start</p>
-									</div>
+									</div> */}
 									<div className="timeline-continue">
 										{/**Start Here */}
 										{logs.map((log, i) => {
 											return <EachLog key={i} log={log} />
 										})}
 									</div>
-									<div className="timeline-start">
+									{/* <div className="timeline-start">
 										<p>End</p>
 									</div>
 									<div className="timeline-launch">
@@ -55,7 +55,7 @@ const Logs = (props) => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */}
 		</Layout>
 	)
 }
